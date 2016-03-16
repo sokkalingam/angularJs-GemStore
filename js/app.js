@@ -4,17 +4,6 @@ app.controller('StoreController', function() {
 	this.product = gem;
 });
 
-
-
-
-
-
-
-
-
-
-
-
 // Test Data, later will come from backend service
 var gem = {
 		 name: 'American Diamond',
