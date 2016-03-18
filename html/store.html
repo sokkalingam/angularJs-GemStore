@@ -9,18 +9,32 @@
 
 <body>
 
-	<div ng-controller="StoreController as store" class="list-group">
+	<div ng-controller="StoreController as storeCtrl" class="list-group">
 
 
-		<div ng-repeat="product in store.products | orderBy: 'price'">
+		<div ng-repeat="product in storeCtrl.products | orderBy: 'price'">
 
 			<div ng-hide="product.soldOut" class="list-group-item">
-				<h3>{{product.name}}
-				<em class="pull-right">{{product.price | currency}}</em>
+				<h3>
+					{{product.name}} <em class="pull-right">{{product.price |
+						currency}}</em>
 				</h3>
 				<img ng-src="{{product.url}}" />
 				<p>{{product.description}}</p>
 				<button ng-show="product.canPurchase">Add to Cart</button>
+
+
+				<section ng-controller="PanelController as panelCtrl">
+				<ul class="nav nav-pills">
+					<li ng-click="panelCtrl.setTab(1)"><a href>Description</a></li>
+					<li ng-click="panelCtrl.setTab(2)"><a href>Specifications</a></li>
+					<li ng-click="panelCtrl.setTab(3)"><a href>Reviews</a></li>
+				</ul>
+
+				<div ng-show="panelCtrl.isTab(1)" class="panel">{{product.description}}</div>
+				<div ng-show="panelCtrl.isTab(2)" class="panel">None Yet</div>
+				<div ng-show="panelCtrl.isTab(3)" class="panel">Be the first one to review!</div>
+				</section>
 			</div>
 
 
