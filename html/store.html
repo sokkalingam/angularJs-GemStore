@@ -12,11 +12,12 @@
 	<div ng-controller="StoreController as store" class="list-group">
 
 
-		<div ng-repeat="product in store.products">
+		<div ng-repeat="product in store.products | orderBy: 'price'">
 
 			<div ng-hide="product.soldOut" class="list-group-item">
-				<h1>{{product.name}}</h1>
-				<h2>$ {{product.price}}</h2>
+				<h3>{{product.name}}
+				<em class="pull-right">{{product.price | currency}}</em>
+				</h3>
 				<img ng-src="{{product.url}}" />
 				<p>{{product.description}}</p>
 				<button ng-show="product.canPurchase">Add to Cart</button>

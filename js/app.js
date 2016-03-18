@@ -16,7 +16,7 @@ var gems = [
 		},
 		{
 			name : 'African Diamond',
-			price : 199.95,
+			price : 199,
 			description : 'Shine bright like an African Diamond. Diamond as the way they were born',
 			url : "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H",
 			canPurchase : true,
