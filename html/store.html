@@ -37,8 +37,8 @@
 				</ul>
 
 				<div ng-show="panelCtrl.isTab(1)" class="panel">{{product.description}}</div>
-				<div ng-show="panelCtrl.isTab(2)" class="panel">None Yet</div>
-				<div ng-show="panelCtrl.isTab(3)" class="panel">Be the first one to review!</div>
+				<div ng-show="panelCtrl.isTab(2)" class="panel" ng-if="product.specifications.length === 0">None Yet</div>
+				<div ng-show="panelCtrl.isTab(3)" class="panel" ng-if="product.reviews.length === 0">Be the first one to review!</div>
 				</section>
 			</div>
 
