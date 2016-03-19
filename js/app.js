@@ -16,6 +16,14 @@ app.controller('PanelController', function(){
 	};
 });
 
+app.controller('ReviewController', function() {
+	this.review = {};
+	this.addReview = function(product) {
+		product.reviews.push(this.review);
+		this.review = {};
+	};
+});
+
 
 // Test Data, later will come from backend service
 var gems = [
@@ -27,7 +35,15 @@ var gems = [
 			canPurchase : true,
 			soldOut : false,
 			specifications: "",
-			reviews : []
+			reviews : [{
+				stars: 5,
+				body: "Awesome",
+				author:"Sokkalingam"
+			}, {
+				stars: 4,
+				body: "Very Good",
+				author:"Subramanian"
+			}]
 		},
 		{
 			name : 'African Diamond',
@@ -37,7 +53,15 @@ var gems = [
 			canPurchase : true,
 			soldOut : false,
 			specifications: "",
-			reviews : []
+			reviews : [{
+				stars: 5,
+				body: "Awesome",
+				author:"Brahmi"
+			}, {
+				stars: 4,
+				body: "Very Good",
+				author:"Reddy"
+			}]
 		},
 		{
 			name : 'Belgium Diamond',

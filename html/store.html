@@ -2,55 +2,79 @@
 <html ng-app='store'>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Gem Store</title>
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Gem Store</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
 </head>
 
 <body>
-<div class="container">
-	<div class="jumbotron">
-		<h1>Gem Store</h1>
-	</div>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Gem Store</h1>
+		</div>
 
-	<div ng-controller="StoreController as storeCtrl" class="list-group">
-
-
-		<div ng-repeat="product in storeCtrl.products | orderBy: 'price'">
-
-			<div ng-hide="product.soldOut" class="list-group-item">
-				<h3>
-					{{product.name}} <em class="pull-right">{{product.price | currency}}</em>
-				</h3>
-				<img ng-src="{{product.url}}" />
-				<p>{{product.description}}</p>
-				<a href="#" class="btn btn-info btn-lg">
-          			<span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
-        		</a>
+		<div ng-controller="StoreController as storeCtrl" class="list-group">
 
 
-				<section ng-controller="PanelController as panelCtrl">
-				<ul class="nav nav-pills">
-					<li ng-click="panelCtrl.setTab(1)" ng-class="{ active : panelCtrl.isTab(1) }"><a href>Description</a></li>
-					<li ng-click="panelCtrl.setTab(2)" ng-class="{ active : panelCtrl.isTab(2) }"><a href>Specifications</a></li>
-					<li ng-click="panelCtrl.setTab(3)" ng-class="{ active : panelCtrl.isTab(3) }"><a href>Reviews</a></li>
-				</ul>
+			<div ng-repeat="product in storeCtrl.products | orderBy: 'price'">
 
-				<div ng-show="panelCtrl.isTab(1)" class="panel">{{product.description}}</div>
-				<div ng-show="panelCtrl.isTab(2)" class="panel" ng-if="product.specifications.length === 0">None Yet</div>
-				<div ng-show="panelCtrl.isTab(3)" class="panel" ng-if="product.reviews.length === 0">Be the first one to review!</div>
-				</section>
+				<div ng-hide="product.soldOut" class="list-group-item">
+					<h3>
+						{{product.name}} <em class="pull-right">{{product.price | currency}}</em>
+					</h3>
+					<img ng-src="{{product.url}}" />
+					<p>{{product.description}}</p>
+					<a href="#" class="btn btn-info btn-lg">
+						<span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+					</a>
+
+
+					<section ng-controller="PanelController as panelCtrl">
+						<ul class="nav nav-pills">
+							<li ng-click="panelCtrl.setTab(1)" ng-class="{ active : panelCtrl.isTab(1) }"><a href>Description</a></li>
+							<li ng-click="panelCtrl.setTab(2)" ng-class="{ active : panelCtrl.isTab(2) }"><a href>Specifications</a></li>
+							<li ng-click="panelCtrl.setTab(3)" ng-class="{ active : panelCtrl.isTab(3) }"><a href>Reviews</a></li>
+						</ul>
+
+						<div ng-show="panelCtrl.isTab(1)" class="panel">{{product.description}}</div>
+						<div ng-show="panelCtrl.isTab(2)" class="panel" ng-if="product.specifications.length === 0">None Yet</div>
+						<div ng-show="panelCtrl.isTab(3)" class="panel">
+							<blockquote ng-if="product.reviews.length === 0">Be the first one to review!</blockquote>
+
+							<div  ng-repeat="review in product.reviews">
+								<b>{{review.stars}} Stars</b>
+								<p>{{review.body}}</p>
+								<cite>- {{review.author}}</cite>
+							</div>
+							<form ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(product)">
+								<div>
+									<b>{{reviewCtrl.review.stars}} Stars</b>
+									<p>{{reviewCtrl.review.body}}</p>
+									<cite>- {{reviewCtrl.review.author}}</cite>
+								</div>
+								<div>
+									<select ng-model="reviewCtrl.review.stars">
+										<option value={{option}} ng-repeat="option in [1,2,3,4,5]">{{option}} Stars</option>
+									</select>
+									<textarea ng-keypress="reviewCtrl.processTextArea(reviewCtrl.review.body)" ng-model="reviewCtrl.review.body" placeholder="Type your review here"></textarea>
+									<input ng-model="reviewCtrl.review.author" placeholder="Enter your name"></input>
+									<input type="submit" value="Submit"></input>
+								</div>
+							</form>
+						</div>
+
+					</section>
+				</div>
+
+
 			</div>
 
 
 		</div>
 
-
+		<script type="text/javascript" src="../js/angular.min.js"></script>
+		<script type="text/javascript" src="../js/app.js"></script>
 	</div>
-
-	<script type="text/javascript" src="../js/angular.min.js"></script>
-	<script type="text/javascript" src="../js/app.js"></script>
-</div>
 </body>
 
 </html>
