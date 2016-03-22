@@ -24,9 +24,9 @@
 					</h3>
 					<img ng-src="{{product.url}}" />
 					<p>{{product.description}}</p>
-					<a href="#" class="btn btn-info btn-lg">
-						<span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
-					</a>
+					<button class="btn btn-info btn-lg">
+						Shopping Cart
+					</button>
 
 
 					<section ng-controller="PanelController as panelCtrl">
@@ -46,18 +46,18 @@
 								<p>{{review.body}}</p>
 								<cite>- {{review.author}}</cite>
 							</div>
-							<form ng-controller="ReviewController as reviewCtrl" ng-submit="reviewCtrl.addReview(product)">
+							<form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
 								<div>
 									<b>{{reviewCtrl.review.stars}} Stars</b>
 									<p>{{reviewCtrl.review.body}}</p>
 									<cite>- {{reviewCtrl.review.author}}</cite>
 								</div>
 								<div>
-									<select ng-model="reviewCtrl.review.stars">
+									<select ng-model="reviewCtrl.review.stars" required>
 										<option value={{option}} ng-repeat="option in [1,2,3,4,5]">{{option}} Stars</option>
 									</select>
 									<textarea ng-keypress="reviewCtrl.processTextArea(reviewCtrl.review.body)" ng-model="reviewCtrl.review.body" placeholder="Type your review here"></textarea>
-									<input ng-model="reviewCtrl.review.author" placeholder="Enter your name"></input>
+									<input ng-model="reviewCtrl.review.author" placeholder="Enter your name" required></input>
 									<input type="submit" value="Submit"></input>
 								</div>
 							</form>
