@@ -24,6 +24,13 @@ app.controller('ReviewController', function() {
 	};
 });
 
+app.directive('reviewForm', function() {
+	return {
+		restrict: 'E',
+		templateUrl: '../html/review-form.html'
+	};
+});
+
 
 // Test Data, later will come from backend service
 var gems = [
