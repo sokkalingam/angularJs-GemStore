@@ -16,11 +16,18 @@ app.controller('PanelController', function(){
 	};
 });
 
-app.controller('ReviewController', function() {
-	this.review = {};
-	this.addReview = function(product) {
-		product.reviews.push(this.review);
-		this.review = {};
+app.directive('reviewForm', function() {
+	return {
+		restrict: 'E',
+		templateUrl: '../html/review-form.html',
+		controller: function() {
+			this.review = {};
+			this.addReview = function(product) {
+				product.reviews.push(this.review);
+				this.review = {};
+			};
+		},
+		controllerAs: 'reviewCtrl'
 	};
 });
 
