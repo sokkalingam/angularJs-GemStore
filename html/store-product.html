@@ -1,9 +1,15 @@
-<h3>
-	{{product.name}} <em class="pull-right">{{product.price | currency}}</em>
-</h3>
-<img ng-src="{{product.url}}" />
-<p>{{product.description}}</p>
-<button class="btn btn-info btn-lg">
-	Shopping Cart
-</button>
-<section ng-controller="PanelController as panelCtrl" ng-include="'product-panel.html'"></section>
+<div class="list-group">
+	<div ng-repeat="product in storeCtrl.products | orderBy: 'price'">
+		<div ng-hide="product.soldOut" class="list-group-item">
+			<h3>
+				{{product.name}} <em class="pull-right">{{product.price | currency}}</em>
+			</h3>
+			<img ng-src="{{product.url}}" />
+			<p>{{product.description}}</p>
+			<button class="btn btn-info btn-lg">
+				Shopping Cart
+			</button>
+			<product-panel></product-panel>
+		</div>
+	</div>
+</div>
