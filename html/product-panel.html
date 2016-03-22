@@ -1,0 +1,9 @@
+<ul class="nav nav-pills">
+	<li ng-click="panelCtrl.setTab(1)" ng-class="{ active : panelCtrl.isTab(1) }"><a href>Description</a></li>
+	<li ng-click="panelCtrl.setTab(2)" ng-class="{ active : panelCtrl.isTab(2) }"><a href>Specifications</a></li>
+	<li ng-click="panelCtrl.setTab(3)" ng-class="{ active : panelCtrl.isTab(3) }"><a href>Reviews</a></li>
+</ul>
+
+<div ng-show="panelCtrl.isTab(1)" class="panel">{{product.description}}</div>
+<div ng-show="panelCtrl.isTab(2)" class="panel" ng-if="product.specifications.length === 0">None Yet</div>
+<div ng-show="panelCtrl.isTab(3)" class="panel" ng-include="'product-review.html'"></div>
