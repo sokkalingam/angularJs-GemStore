@@ -1,0 +1,8 @@
+<blockquote ng-if="product.reviews.length === 0">Be the first one to review!</blockquote>
+
+<div  ng-repeat="review in product.reviews">
+	<b>{{review.stars}} Stars</b>
+	<p>{{review.body}}</p>
+	<cite>- {{review.author}}</cite>
+</div>
+<div ng-controller="ReviewController as reviewCtrl" ng-include="'review-form.html'"></div>
