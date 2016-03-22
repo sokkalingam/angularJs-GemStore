@@ -1,9 +1,5 @@
 var app = angular.module('store', []);
 
-app.controller('StoreController', function() {
-	this.products = gems;
-});
-
 app.directive('reviewForm', function() {
 	return {
 		restrict: 'E',
@@ -42,6 +38,17 @@ app.directive('productPanel', function() {
 			};
 		},
 		controllerAs: 'panelCtrl'
+	};
+});
+
+app.directive('storeProduct', function() {
+	return {
+		restrict: 'E',
+		templateUrl: '../html/store-product.html',
+		controller: function() {
+			this.products = gems;
+		},
+		controllerAs:'storeCtrl'
 	};
 });
 
