@@ -6,4 +6,7 @@
 
 <div ng-show="panelCtrl.isTab(1)" class="panel">{{product.description}}</div>
 <div ng-show="panelCtrl.isTab(2)" class="panel" ng-if="product.specifications.length === 0">None Yet</div>
-<div ng-show="panelCtrl.isTab(3)" class="panel" ng-include="'product-review.html'"></div>
+<div ng-show="panelCtrl.isTab(3)" class="panel">
+	<product-review></product-review>
+	<review-form></review-form>
+</div>
