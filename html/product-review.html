@@ -1,7 +1,9 @@
-<blockquote ng-if="product.reviews.length === 0">Be the first one to review!</blockquote>
+<p ng-if="product.reviews.length === 0">Be the first one to review!</p>
 
-<div  ng-repeat="review in product.reviews">
+<ul class="list-group">
+<li class="list-group-item" ng-repeat="review in product.reviews">
 	<b>{{review.stars}} Stars</b>
 	<p>{{review.body}}</p>
 	<cite>- {{review.author}}</cite>
-</div>
+</li>
+</ul>
