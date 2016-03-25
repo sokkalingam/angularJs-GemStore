@@ -1,20 +1,10 @@
 <div class="list-group">
 	<div ng-repeat="product in storeCtrl.products | orderBy: 'price'">
-		<div ng-hide="product.soldOut" class="list-group-item">
-			<h3>
-				{{product.name}} <em class="pull-right">{{product.price | currency}}</em>
-			</h3>
-			
-			<div>
-				<ng-gallery images="product.images"></ng-gallery>
-			</div>
-
-
-			<p>{{product.description}}</p>
-			<button class="btn btn-info btn-lg">
-				Shopping Cart
-			</button>
-			<product-panel></product-panel>
-		</div>
+		<div ng-include="'product-detail.html'"></div>
 	</div>
 </div>
+
+<div ng-include="'add-product.html'"></div>
+
+
+

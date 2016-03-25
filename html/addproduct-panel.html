@@ -10,9 +10,8 @@
 	</li>
 </ul>
 
-<div ng-show="panelCtrl.isTab(1)" class="panel panel-body">{{product.description}}</div>
-<div ng-show="panelCtrl.isTab(2)" class="panel panel-body">{{product.specifications}}</div>
+<div ng-show="panelCtrl.isTab(1)" class="panel panel-body">{{storeCtrl.product.description}}</div>
+<div ng-show="panelCtrl.isTab(2)" class="panel panel-body">{{storeCtrl.product.specifications}}</div>
 <div ng-show="panelCtrl.isTab(3)" class="panel pabel-body">
-	<product-review></product-review>
-	<review-form></review-form>
+	<p>Cannot add any review yet!</p>
 </div>

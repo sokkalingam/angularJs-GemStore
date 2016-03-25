@@ -41,12 +41,39 @@ app.directive('productPanel', function() {
 	};
 });
 
+app.directive('addproductPanel', function() {
+	return {
+		restrict: 'E',
+		templateUrl: '../html/addproduct-panel.html',
+		controller: function(){
+			this.tab = 1;
+
+			this.setTab = function(tab) {
+				this.tab = tab;
+			};
+
+			this.isTab = function(tab) {
+				return this.tab === tab;
+			};
+		},
+		controllerAs: 'panelCtrl'
+	};
+});
+
 app.directive('storeProduct', function() {
 	return {
 		restrict: 'E',
 		templateUrl: '../html/store-product.html',
 		controller: function() {
 			this.products = gems;
+			this.product = {
+				images:[],
+				reviews:[]
+			};
+			this.addProduct = function() {
+				this.products.push(this.product);
+				this.product = {};
+			};
 		},
 		controllerAs:'storeCtrl'
 	};
@@ -59,6 +86,10 @@ var gems = [
 	name : 'American Diamond',
 	price : 89.95,
 	description : 'Shine bright like an American Diamond. Value for money, the looks that has no match.',
+	quantity: 10,
+	canPurchase : true,
+	soldOut : false,
+	specifications: "",
 	images : [
 		{	thumb: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H",
 			img:"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H"
@@ -70,9 +101,6 @@ var gems = [
 			img: "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png"
 		}
 	],
-	canPurchase : true,
-	soldOut : false,
-	specifications: "",
 	reviews : [{
 		stars: 5,
 		body: "Awesome",
@@ -87,6 +115,10 @@ var gems = [
 	name : 'African Diamond',
 	price : 199,
 	description : 'Shine bright like an African Diamond. Diamond as the way they were born',
+	quantity: 10,
+	canPurchase : true,
+	soldOut : false,
+	specifications: "",
 	images : [
 		{	thumb: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H",
 			img:"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H"
@@ -98,9 +130,6 @@ var gems = [
 			img: "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png"
 		}
 	],
-	canPurchase : true,
-	soldOut : false,
-	specifications: "",
 	reviews : [{
 		stars: 5,
 		body: "Awesome",
@@ -115,6 +144,10 @@ var gems = [
 	name : 'Belgium Diamond',
 	price : 129.95,
 	description : 'Shine bright like an Belgium Diamond. Diamond the Belgium way',
+	quantity: 10,
+	canPurchase : true,
+	soldOut : false,
+	specifications: "",
 	images : [
 		{	thumb: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H",
 			img:"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H"
@@ -126,8 +159,5 @@ var gems = [
 			img: "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png"
 		}
 	],
-	canPurchase : true,
-	soldOut : false,
-	specifications: "",
 	reviews : []
 }];
