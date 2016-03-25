@@ -41,10 +41,10 @@ app.directive('productPanel', function() {
 	};
 });
 
-app.directive('addproductPanel', function() {
+app.directive('addProductLivePreviewPanel', function() {
 	return {
 		restrict: 'E',
-		templateUrl: '../html/addproduct-panel.html',
+		templateUrl: '../html/add-product-live-preview-panel.html',
 		controller: function(){
 			this.tab = 1;
 
@@ -72,7 +72,10 @@ app.directive('storeProduct', function() {
 			};
 			this.addProduct = function() {
 				this.products.push(this.product);
-				this.product = {};
+				this.product = {
+					images:[],
+					reviews:[]
+				};
 			};
 		},
 		controllerAs:'storeCtrl'
