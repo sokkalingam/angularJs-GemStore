@@ -65,14 +65,15 @@ app.directive('storeProduct', function() {
 		restrict: 'E',
 		templateUrl: '../html/store-product.html',
 		controller: function() {
-			this.products = gems;
-			this.product = {
+			var store = this;
+			store.products = gems;
+			store.product = {
 				images:[],
 				reviews:[]
 			};
-			this.addProduct = function() {
-				this.products.push(this.product);
-				this.product = {
+			store.addProduct = function() {
+				store.products.push(store.product);
+				store.product = {
 					images:[],
 					reviews:[]
 				};
