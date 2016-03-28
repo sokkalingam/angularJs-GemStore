@@ -1,4 +1,4 @@
-var app = angular.module('store', ['jkuri.gallery']);
+var app = angular.module('store', []);
 
 app.directive('reviewForm', function() {
 	return {
@@ -60,28 +60,38 @@ app.directive('addProductLivePreviewPanel', function() {
 	};
 });
 
-app.directive('storeProduct', function() {
+app.directive('storeProduct', ['$http', function($http) {
 	return {
 		restrict: 'E',
 		templateUrl: '../html/store-product.html',
 		controller: function() {
 			var store = this;
-			store.products = gems;
-			store.product = {
-				images:[],
-				reviews:[]
+			store.products = [];
+			store.getAll = function() {
+				$http.get('http://localhost:8080/gemstore/webapi/gems').success(function(data) {
+					console.log('HTTP GET: http://localhost:8080/gemstore/webapi/gems');
+					store.products = data;	
+				});
 			};
+			store.getAll();
+			store.product = { reviews:[] };
 			store.addProduct = function() {
-				store.products.push(store.product);
-				store.product = {
-					images:[],
-					reviews:[]
-				};
+				$http.post('http://localhost:8080/gemstore/webapi/gems', store.product).success(function(data) {
+					console.log('HTTP POST: http://localhost:8080/gemstore/webapi/gems');
+					store.product = { reviews: []};
+					store.getAll();
+				});
+			};
+			store.deleteProduct = function(product) {
+				$http.delete('http://localhost:8080/gemstore/webapi/gems/' + product.id).success(function(data){
+					console.log('HTTP DELETE: http://localhost:8080/gemstore/webapi/gems/' + product.id);
+					store.getAll();
+				});
 			};
 		},
 		controllerAs:'storeCtrl'
 	};
-});
+}]);
 
 
 // Test Data, later will come from backend service
@@ -93,18 +103,8 @@ var gems = [
 	quantity: 10,
 	canPurchase : true,
 	soldOut : false,
-	specifications: "",
-	images : [
-		{	thumb: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H",
-			img:"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H"
-		},
-		{	thumb: "http://www.belgium-diamonds.com/images/shape_large_princess.jpg",
-			img: "http://www.belgium-diamonds.com/images/shape_large_princess.jpg"
-		},
-		{	thumb: "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png",
-			img: "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png"
-		}
-	],
+	specifications: "Here are some",
+	image: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H",
 	reviews : [{
 		stars: 5,
 		body: "Awesome",
@@ -122,18 +122,8 @@ var gems = [
 	quantity: 10,
 	canPurchase : true,
 	soldOut : false,
-	specifications: "",
-	images : [
-		{	thumb: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H",
-			img:"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H"
-		},
-		{	thumb: "http://www.belgium-diamonds.com/images/shape_large_princess.jpg",
-			img: "http://www.belgium-diamonds.com/images/shape_large_princess.jpg"
-		},
-		{	thumb: "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png",
-			img: "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png"
-		}
-	],
+	specifications: "Top notch",
+	image : "http://www.belgium-diamonds.com/images/shape_large_princess.jpg",
 	reviews : [{
 		stars: 5,
 		body: "Awesome",
@@ -151,17 +141,7 @@ var gems = [
 	quantity: 10,
 	canPurchase : true,
 	soldOut : false,
-	specifications: "",
-	images : [
-		{	thumb: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H",
-			img:"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6fQe9z0ySHTIX8WzgucnSOwKqn7EuPhqzoTuYAu-5XMz-fY2H"
-		},
-		{	thumb: "http://www.belgium-diamonds.com/images/shape_large_princess.jpg",
-			img: "http://www.belgium-diamonds.com/images/shape_large_princess.jpg"
-		},
-		{	thumb: "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png",
-			img: "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png"
-		}
-	],
+	specifications: "Take it and go, take it and go",
+	image : "http://www.gemandmineralsociety.org/gem_png_by_doloresdevelde-d57p0sp[1].png",
 	reviews : []
 }];
