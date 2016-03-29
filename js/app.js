@@ -22,6 +22,12 @@ app.directive('productReview', ['$http', function($http) {
 					ctrl.loadReviews(product);
 				});
 			};
+			ctrl.deleteReview = function(product, review) {
+				$http.delete(baseUrl + '/gems/' + product.id + '/reviews/' + review.id).success(function(data){
+					console.log('HTTP DELETE: ' + baseUrl + '/gems/' + product.id + '/reviews');
+					ctrl.loadReviews(product);
+				});
+			}
 		},
 		controllerAs: 'reviewCtrl'
 	};

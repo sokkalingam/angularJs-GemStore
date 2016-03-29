@@ -1,5 +1,6 @@
 <ul class="list-group" ng-init="reviewCtrl.loadReviews(product)">
 <li class="list-group-item" ng-repeat="review in reviewCtrl.reviews">
+	<button class="btn btn-danger btn-sm pull-right" ng-click="reviewCtrl.deleteReview(product, review)">Delete</button>
 	<b>{{review.stars}} Stars</b>
 	<p>{{review.body}}</p>
 	<b><cite>- {{review.author}}</cite></b>
