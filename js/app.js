@@ -1,40 +1,46 @@
 var app = angular.module('store', []);
+var baseUrl = 'http://localhost:8080/gemstore/webapi';
 
-app.directive('reviewForm', function() {
+app.directive('productReview', ['$http', function($http) {
 	return {
 		restrict: 'E',
-		templateUrl: '../html/review-form.html',
+		templateUrl: '../html/product-review.html',
 		controller: function() {
-			this.review = {};
-			this.addReview = function(product) {
-				product.reviews.push(this.review);
-				this.review = {};
+			var ctrl = this;
+			ctrl.review = {};
+			ctrl.reviews = [];
+			ctrl.loadReviews = function(product) {
+				$http.get(baseUrl + '/gems/' + product.id + '/reviews').success(function(data){
+					console.log('HTTP GET: ' + baseUrl + '/gems/' + product.id + '/reviews');
+					ctrl.reviews = data;
+				});
+			};
+			ctrl.addReview = function(product) {
+				$http.post(baseUrl + '/gems/' + product.id + '/reviews', ctrl.review).success(function(data){
+					console.log('HTTP POST: ' + baseUrl + '/gems/' + product.id + '/reviews');
+					ctrl.review = {};
+					ctrl.loadReviews(product);
+				});
 			};
 		},
 		controllerAs: 'reviewCtrl'
 	};
-});
-
-app.directive('productReview', function() {
-	return {
-		restrict: 'E',
-		templateUrl: '../html/product-review.html'
-	};
-});
+}]);
 
 app.directive('productPanel', function() {
 	return {
 		restrict: 'E',
 		templateUrl: '../html/product-panel.html',
 		controller: function(){
-			this.tab = 1;
+			var panelCtrl = this;
+			panelCtrl.tab = 1;
 
-			this.setTab = function(tab) {
-				this.tab = tab;
+			panelCtrl.setTab = function(tab) {
+				panelCtrl.tab = tab;
 			};
 
-			this.isTab = function(tab) {
-				return this.tab === tab;
+			panelCtrl.isTab = function(tab) {
+				return panelCtrl.tab === tab;
 			};
 		},
 		controllerAs: 'panelCtrl'
@@ -68,23 +74,23 @@ app.directive('storeProduct', ['$http', function($http) {
 			var store = this;
 			store.products = [];
 			store.getAll = function() {
-				$http.get('http://localhost:8080/gemstore/webapi/gems').success(function(data) {
-					console.log('HTTP GET: http://localhost:8080/gemstore/webapi/gems');
+				$http.get(baseUrl + '/gems').success(function(data) {
+					console.log('HTTP GET: ' + baseUrl + '/gems');
 					store.products = data;	
 				});
 			};
 			store.getAll();
 			store.product = { reviews:[] };
 			store.addProduct = function() {
-				$http.post('http://localhost:8080/gemstore/webapi/gems', store.product).success(function(data) {
-					console.log('HTTP POST: http://localhost:8080/gemstore/webapi/gems');
+				$http.post(baseUrl + '/gems', store.product).success(function(data) {
+					console.log('HTTP POST: ' + baseUrl + '/gems');
 					store.product = { reviews: []};
 					store.getAll();
 				});
 			};
 			store.deleteProduct = function(product) {
-				$http.delete('http://localhost:8080/gemstore/webapi/gems/' + product.id).success(function(data){
-					console.log('HTTP DELETE: http://localhost:8080/gemstore/webapi/gems/' + product.id);
+				$http.delete(baseUrl + '/gems/' + product.id).success(function(data){
+					console.log('HTTP DELETE: '+ baseUrl + '/gems/' + product.id);
 					store.getAll();
 				});
 			};

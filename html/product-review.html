@@ -1,9 +1,37 @@
-<p ng-if="product.reviews.length === 0">Be the first one to review!</p>
-
-<ul class="list-group">
-<li class="list-group-item" ng-repeat="review in product.reviews">
+<ul class="list-group" ng-init="reviewCtrl.loadReviews(product)">
+<li class="list-group-item" ng-repeat="review in reviewCtrl.reviews">
 	<b>{{review.stars}} Stars</b>
 	<p>{{review.body}}</p>
-	<cite>- {{review.author}}</cite>
+	<b><cite>- {{review.author}}</cite></b>
 </li>
 </ul>
+
+<button class="btn btn-info btn-sm" type="button" data-toggle="collapse" data-target="[name='form-{{product.name}}']">
+<span class="glyphicon glyphicon-plus"></span> Add Review 
+</button>
+
+
+<div name="form-{{product.name}}" class="collapse">
+	<form role="form" class="form-horizontal" name="reviewForm" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
+		<div>
+			<b>{{reviewCtrl.review.stars}} <span ng-show="reviewCtrl.review.stars">Stars</span></b>
+			<p>{{reviewCtrl.review.body}}</p>
+			<cite><span ng-show="reviewCtrl.review.author">-</span> {{reviewCtrl.review.author}}</cite>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1">Rating:</label>
+			<select class="col-sm-5" ng-model="reviewCtrl.review.stars" required>
+				<option value={{option}} ng-repeat="option in [1,2,3,4,5]">{{option}} Stars</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1">Review:</label>
+			<textarea class="col-sm-5" rows="'5'" ng-model="reviewCtrl.review.body" placeholder="Type your review here"></textarea>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1">Author:</label>
+			<input class="col-sm-5" ng-model="reviewCtrl.review.author" placeholder="Enter your name" required></input>
+		</div>
+		<input type="submit" value="Submit"></input>
+	</form>
+</div>
