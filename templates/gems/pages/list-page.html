@@ -1,0 +1,13 @@
+<div class="list-group">
+	<div ng-repeat="product in gemsCtrl.products | orderBy: 'price'">
+		<div ng-hide="product.soldOut" class="list-group-item">
+			<div ng-include="'../templates/gems/sections/content.html'"></div>
+			<button class="btn btn-info btn-lg">Add to Cart</button>
+			<button class="btn btn-danger btn-lg pull-right" ng-click="gemsCtrl.deleteProduct(product)">Delete</button>
+			<div ng-include="'../templates/gems/sections/panel.html'"></div>
+		</div>
+	</div>
+</div>
+
+
+

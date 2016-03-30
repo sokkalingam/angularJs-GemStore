@@ -1,55 +1,41 @@
-var app = angular.module('store', []);
+var app = angular.module('store', ['ngRoute']);
 var baseUrl = 'http://localhost:8080/gemstore/webapi';
 
-app.directive('productReview', ['$http', function($http) {
-	return {
-		restrict: 'E',
-		templateUrl: '../html/product-review.html',
-		controller: function() {
-			var ctrl = this;
+app.controller('ReviewController', ['$http', function($http) {
+	var ctrl = this;
+	ctrl.review = {};
+	ctrl.reviews = [];
+	ctrl.loadReviews = function(product) {
+		$http.get(baseUrl + '/gems/' + product.id + '/reviews').success(function(data){
+			console.log('HTTP GET: ' + baseUrl + '/gems/' + product.id + '/reviews');
+			ctrl.reviews = data;
+		});
+	};
+	ctrl.addReview = function(product) {
+		$http.post(baseUrl + '/gems/' + product.id + '/reviews', ctrl.review).success(function(data){
+			console.log('HTTP POST: ' + baseUrl + '/gems/' + product.id + '/reviews');
 			ctrl.review = {};
-			ctrl.reviews = [];
-			ctrl.loadReviews = function(product) {
-				$http.get(baseUrl + '/gems/' + product.id + '/reviews').success(function(data){
-					console.log('HTTP GET: ' + baseUrl + '/gems/' + product.id + '/reviews');
-					ctrl.reviews = data;
-				});
-			};
-			ctrl.addReview = function(product) {
-				$http.post(baseUrl + '/gems/' + product.id + '/reviews', ctrl.review).success(function(data){
-					console.log('HTTP POST: ' + baseUrl + '/gems/' + product.id + '/reviews');
-					ctrl.review = {};
-					ctrl.loadReviews(product);
-				});
-			};
-			ctrl.deleteReview = function(product, review) {
-				$http.delete(baseUrl + '/gems/' + product.id + '/reviews/' + review.id).success(function(data){
-					console.log('HTTP DELETE: ' + baseUrl + '/gems/' + product.id + '/reviews');
-					ctrl.loadReviews(product);
-				});
-			}
-		},
-		controllerAs: 'reviewCtrl'
+			ctrl.loadReviews(product);
+		});
+	};
+	ctrl.deleteReview = function(product, review) {
+		$http.delete(baseUrl + '/gems/' + product.id + '/reviews/' + review.id).success(function(data){
+			console.log('HTTP DELETE: ' + baseUrl + '/gems/' + product.id + '/reviews');
+			ctrl.loadReviews(product);
+		});
 	};
 }]);
 
-app.directive('productPanel', function() {
-	return {
-		restrict: 'E',
-		templateUrl: '../html/product-panel.html',
-		controller: function(){
-			var panelCtrl = this;
-			panelCtrl.tab = 1;
+app.controller('GemPanelController', function() {
+	var panelCtrl = this;
+	panelCtrl.tab = 1;
 
-			panelCtrl.setTab = function(tab) {
-				panelCtrl.tab = tab;
-			};
+	panelCtrl.setTab = function(tab) {
+		panelCtrl.tab = tab;
+	};
 
-			panelCtrl.isTab = function(tab) {
-				return panelCtrl.tab === tab;
-			};
-		},
-		controllerAs: 'panelCtrl'
+	panelCtrl.isTab = function(tab) {
+		return panelCtrl.tab === tab;
 	};
 });
 
@@ -72,36 +58,28 @@ app.directive('addProductLivePreviewPanel', function() {
 	};
 });
 
-app.directive('storeProduct', ['$http', function($http) {
-	return {
-		restrict: 'E',
-		templateUrl: '../html/store-product.html',
-		controller: function() {
-			var store = this;
-			store.products = [];
-			store.getAll = function() {
-				$http.get(baseUrl + '/gems').success(function(data) {
-					console.log('HTTP GET: ' + baseUrl + '/gems');
-					store.products = data;	
-				});
-			};
+app.controller('GemsController', ['$http', function($http) {
+	var store = this;
+	store.products = [];
+	store.getAll = function() {
+		$http.get(baseUrl + '/gems').success(function(data) {
+			console.log('HTTP GET: ' + baseUrl + '/gems');
+			store.products = data;	
+		});
+	};
+	store.getAll();
+	store.product = { reviews:[] };
+	store.addProduct = function() {
+		$http.post(baseUrl + '/gems', store.product).success(function(data) {
+			console.log('HTTP POST: ' + baseUrl + '/gems');
+			store.product = { reviews: [] };
+		});
+	};
+	store.deleteProduct = function(product) {
+		$http.delete(baseUrl + '/gems/' + product.id).success(function(data){
+			console.log('HTTP DELETE: '+ baseUrl + '/gems/' + product.id);
 			store.getAll();
-			store.product = { reviews:[] };
-			store.addProduct = function() {
-				$http.post(baseUrl + '/gems', store.product).success(function(data) {
-					console.log('HTTP POST: ' + baseUrl + '/gems');
-					store.product = { reviews: []};
-					store.getAll();
-				});
-			};
-			store.deleteProduct = function(product) {
-				$http.delete(baseUrl + '/gems/' + product.id).success(function(data){
-					console.log('HTTP DELETE: '+ baseUrl + '/gems/' + product.id);
-					store.getAll();
-				});
-			};
-		},
-		controllerAs:'storeCtrl'
+		});
 	};
 }]);
 
