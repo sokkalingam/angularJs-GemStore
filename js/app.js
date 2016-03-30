@@ -1,27 +1,28 @@
 var app = angular.module('store', ['ngRoute']);
 var baseUrl = 'http://localhost:8080/gemstore/webapi';
 
-app.controller('ReviewController', ['$http', function($http) {
-	var ctrl = this;
-	ctrl.review = {};
-	ctrl.reviews = [];
-	ctrl.loadReviews = function(product) {
+app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
+	$scope.review = {};
+	$scope.reviews = [];
+	$scope.loadReviews = function(product) {
 		$http.get(baseUrl + '/gems/' + product.id + '/reviews').success(function(data){
 			console.log('HTTP GET: ' + baseUrl + '/gems/' + product.id + '/reviews');
-			ctrl.reviews = data;
+			$scope.reviews = data;
 		});
 	};
-	ctrl.addReview = function(product) {
-		$http.post(baseUrl + '/gems/' + product.id + '/reviews', ctrl.review).success(function(data){
+	$scope.addReview = function(product) {
+		$http.post(baseUrl + '/gems/' + product.id + '/reviews', $scope.review).success(function(data){
 			console.log('HTTP POST: ' + baseUrl + '/gems/' + product.id + '/reviews');
-			ctrl.review = {};
-			ctrl.loadReviews(product);
+			$scope.review = {};
+			$scope.reviewForm.$setPristine();
+			$scope.reviewForm.$setUntouched();
+			$scope.loadReviews(product);
 		});
 	};
-	ctrl.deleteReview = function(product, review) {
+	$scope.deleteReview = function(product, review) {
 		$http.delete(baseUrl + '/gems/' + product.id + '/reviews/' + review.id).success(function(data){
 			console.log('HTTP DELETE: ' + baseUrl + '/gems/' + product.id + '/reviews');
-			ctrl.loadReviews(product);
+			$scope.loadReviews(product);
 		});
 	};
 }]);
@@ -82,7 +83,6 @@ app.controller('GemsController', ['$http', function($http) {
 		});
 	};
 }]);
-
 
 // Test Data, later will come from backend service
 var gems = [
