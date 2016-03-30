@@ -1,8 +1,0 @@
-<div ng-hide="product.soldOut" class="list-group-item">
-	<h3>{{product.name}} <em class="pull-right">{{product.price | currency}}</em></h3>
-	<div><img class="img-rounded" ng-src="{{product.image}}"></img></div>
-	<label>Quantity: </label><p>{{product.quantity}}</p>
-	<button class="btn btn-info btn-lg">Add to Cart</button>
-	<button class="btn btn-danger btn-lg pull-right" ng-click="storeCtrl.deleteProduct(product)">Delete</button>
-	<product-panel></product-panel>
-</div>
