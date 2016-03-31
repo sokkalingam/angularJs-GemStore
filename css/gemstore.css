@@ -1,0 +1,12 @@
+/*
+* CSS for Gem Store
+* Custom css to override or add additional features to Bootstrap
+*/
+
+.ng-invalid.ng-dirty{
+	border-color: red;
+}
+
+.ng-valid.ng-dirty{
+	border-color: green;
+}
