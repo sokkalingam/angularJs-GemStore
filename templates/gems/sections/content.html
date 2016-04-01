@@ -1,3 +1,3 @@
-<h3>{{product.name}} <em class="pull-right">{{product.price | currency}}</em></h3>
+<h3><span editable-text="product.name">{{product.name}}</span> <em editable-text="product.price" class="pull-right">{{product.price | currency}}</em></h3>
 <div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img></div>
-<label>Quantity: </label><p>{{product.quantity}}</p>
+<div><label>Quantity: </label><b editable-text="product.quantity">{{product.quantity}}</b></div>
