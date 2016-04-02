@@ -80,9 +80,10 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 	};
 
 	$scope.updateProduct = function(product) {
+		console.log("product reviews: " + product.reviews);
 		$http.put(baseUrl + '/gems/' + product.id, product).success(function(data) {
 			console.log('HTTP PUT: ' + baseUrl + '/gems/' + product.id);
-			
+			$scope.getAll();
 		});
 	}
 
