@@ -59,27 +59,30 @@ app.directive('addProductLivePreviewPanel', function() {
 	};
 });
 
-app.controller('GemsController', ['$http', function($http) {
-	var store = this;
-	store.products = [];
-	store.getAll = function() {
+app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.products = [];
+	$scope.product = { reviews:[] };
+
+	$scope.getAll = function() {
 		$http.get(baseUrl + '/gems').success(function(data) {
 			console.log('HTTP GET: ' + baseUrl + '/gems');
-			store.products = data;	
+			$scope.products = data;	
 		});
 	};
-	store.getAll();
-	store.product = { reviews:[] };
-	store.addProduct = function() {
-		$http.post(baseUrl + '/gems', store.product).success(function(data) {
+
+	$scope.addProduct = function() {
+		$http.post(baseUrl + '/gems', $scope.product).success(function(data) {
 			console.log('HTTP POST: ' + baseUrl + '/gems');
-			store.product = { reviews: [] };
+			$scope.product = { reviews: [] };
 		});
 	};
-	store.deleteProduct = function(product) {
+
+	$scope.deleteProduct = function(product) {
 		$http.delete(baseUrl + '/gems/' + product.id).success(function(data){
 			console.log('HTTP DELETE: '+ baseUrl + '/gems/' + product.id);
-			store.getAll();
+			$scope.getAll();
 		});
 	};
+
 }]);
