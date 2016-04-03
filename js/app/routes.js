@@ -9,5 +9,10 @@ angular.module('store')
 			templateUrl: '../templates/gems/pages/add-page.html',
 			controller: 'GemsController',
 			controllerAs: 'gemsCtrl'
-		});
+		})
+		.when('/', {
+			templateUrl: '../templates/home/home-page.html',
+			controller: 'TabController'
+		})
+		.otherwise({redirectTo: '/'});
 	});

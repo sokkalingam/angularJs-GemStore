@@ -27,18 +27,19 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 	};
 }]);
 
-app.controller('GemPanelController', function() {
-	var panelCtrl = this;
-	panelCtrl.tab = 1;
+app.controller('TabController', ['$scope', function($scope) {
 
-	panelCtrl.setTab = function(tab) {
-		panelCtrl.tab = tab;
+	$scope.tab = 1;
+
+	$scope.setTab = function(tab) {
+		$scope.tab = tab;
 	};
 
-	panelCtrl.isTab = function(tab) {
-		return panelCtrl.tab === tab;
+	$scope.isTab = function(tab) {
+		return $scope.tab === tab;
 	};
-});
+
+}]);
 
 app.directive('addProductLivePreviewPanel', function() {
 	return {
