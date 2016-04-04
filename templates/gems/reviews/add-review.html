@@ -2,26 +2,28 @@
 
 	<div>
 		<h3>Average Customer Review: {{averageReview.averageReview}}</h3>
+		<button class="btn btn-primary btn-sm" type="button" ng-click="setRating(0)" ng-hide="isRating(0)">See all reviews!</button>
 		<div ng-repeat="(key, value) in averageReview.starsToUsersMap">
 			<div>
-			<b><ng-pluralize count="key" when="{1: '1 Star', 'other': '{} Stars'}"></ng-pluralize></b>
-			<ng-pluralize count="value" when="{1: ' - 1 User', 'other': ' - {} Users'}"></ng-pluralize>
+				<b><ng-pluralize count="key" when="{1: '1 Star', 'other': '{} Stars'}"></ng-pluralize></b>
+				from <ng-pluralize count="value" when="{1: '1 User', 'other': '{} Users'}"></ng-pluralize>
 			</div>
-			<div class="progress">
-				<div class="progress-bar" role="progressbar" style="width:{{(value*100)/reviews.length}}%">
+			<a href=""><div class="progress">
+				<div class="progress-bar" role="progressbar" style="width:{{(value*100)/reviews.length}}%" ng-click="setRating(key)">
 					{{ (value * 100 / reviews.length) | number:0 }}%
 				</div>
-			</div>
+			</div></a>
 		</div>
-
-
+		
 		<ul class="list-group">
-			<li class="list-group-item" ng-repeat="review in reviews">
-				<button class="btn btn-danger btn-sm pull-right" ng-click="deleteReview(product, review)">Delete</button>
-				<b>{{review.stars}} Stars</b>
-				<p>{{review.body}}</p>
-				<b><cite>- {{review.author}}</cite></b>
-			</li>
+			<div ng-repeat="review in reviews">
+			<li class="list-group-item" ng-show="rating === 0 || isRating(review.stars)">
+					<button class="btn btn-danger btn-sm pull-right" ng-click="deleteReview(product, review)">Delete</button>
+					<b>{{review.stars}} Stars</b>
+					<p>{{review.body}}</p>
+					<b><cite>- {{review.author}}</cite></b>
+				</li>
+			</div>
 		</ul>
 
 		<button class="btn btn-info btn-sm" type="button" data-toggle="collapse" data-target="[name='form-{{product.name}}']">
