@@ -1,4 +1,4 @@
-var app = angular.module('store', ['ngRoute']);
+var app = angular.module('store', ['ngRoute', 'xeditable']);
 var baseUrl = 'http://localhost:8080/gemstore/webapi';
 
 app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
@@ -76,8 +76,17 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 		$http.post(baseUrl + '/gems', $scope.product).success(function(data) {
 			console.log('HTTP POST: ' + baseUrl + '/gems');
 			$scope.product = { reviews: [] };
+			$scope.addProductForm.$setPristine();
+			$scope.addProductForm.$setUntouched();
 		});
 	};
+
+	$scope.updateProduct = function(product) {
+		$http.put(baseUrl + '/gems/' + product.id, product).success(function(data) {
+			console.log('HTTP PUT: ' + baseUrl + '/gems/' + product.id);
+			$scope.getAll();
+		});
+	}
 
 	$scope.deleteProduct = function(product) {
 		$http.delete(baseUrl + '/gems/' + product.id).success(function(data){

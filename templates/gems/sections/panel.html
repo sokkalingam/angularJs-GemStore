@@ -11,8 +11,8 @@
 		</li>
 	</ul>
 
-	<div ng-show="isTab(1)" class="panel panel-body">{{product.description}}</div>
-	<div ng-show="isTab(2)" class="panel panel-body">{{product.specifications}}</div>
+	<div ng-show="isTab(1)" class="panel panel-body" editable-textarea="product.description" e-rows="4" e-cols="130" onbeforesave="updateProduct(product)">{{product.description}}</div>
+	<div ng-show="isTab(2)" class="panel panel-body" editable-textarea="product.specifications" e-rows="4" e-cols="130" onbeforesave="updateProduct(product)">{{product.specifications}}</div>
 	<div ng-show="isTab(3)" class="panel pabel-body">
 		<div ng-include="'../templates/gems/reviews/add-review.html'"></div>
 	</div>
