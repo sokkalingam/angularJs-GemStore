@@ -76,11 +76,12 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 		$http.post(baseUrl + '/gems', $scope.product).success(function(data) {
 			console.log('HTTP POST: ' + baseUrl + '/gems');
 			$scope.product = { reviews: [] };
+			$scope.addProductForm.$setPristine();
+			$scope.addProductForm.$setUntouched();
 		});
 	};
 
 	$scope.updateProduct = function(product) {
-		console.log("product reviews: " + product.reviews);
 		$http.put(baseUrl + '/gems/' + product.id, product).success(function(data) {
 			console.log('HTTP PUT: ' + baseUrl + '/gems/' + product.id);
 			$scope.getAll();
