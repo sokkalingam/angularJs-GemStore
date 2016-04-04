@@ -4,12 +4,16 @@ var baseUrl = 'http://localhost:8080/gemstore/webapi';
 app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 	$scope.review = {};
 	$scope.reviews = [];
+	$scope.averageReview = {};
+
 	$scope.loadReviews = function(product) {
 		$http.get(baseUrl + '/gems/' + product.id + '/reviews').success(function(data){
 			console.log('HTTP GET: ' + baseUrl + '/gems/' + product.id + '/reviews');
-			$scope.reviews = data;
+			$scope.reviews = data.reviews;
+			$scope.averageReview = data.averageReview;
 		});
 	};
+
 	$scope.addReview = function(product) {
 		$http.post(baseUrl + '/gems/' + product.id + '/reviews', $scope.review).success(function(data){
 			console.log('HTTP POST: ' + baseUrl + '/gems/' + product.id + '/reviews');
@@ -19,9 +23,10 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 			$scope.loadReviews(product);
 		});
 	};
+
 	$scope.deleteReview = function(product, review) {
 		$http.delete(baseUrl + '/gems/' + product.id + '/reviews/' + review.id).success(function(data){
-			console.log('HTTP DELETE: ' + baseUrl + '/gems/' + product.id + '/reviews');
+			console.log('HTTP DELETE: ' + baseUrl + '/gems/' + product.id + '/reviews/' + review.id);
 			$scope.loadReviews(product);
 		});
 	};
