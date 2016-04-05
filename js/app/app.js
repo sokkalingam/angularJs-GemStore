@@ -110,4 +110,9 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 		});
 	};
 
+	$scope.checkout = function(product) {
+		product.quantity = product.quantity - 1;
+		$scope.updateProduct(product);
+	}
+
 }]);

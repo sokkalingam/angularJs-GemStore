@@ -5,4 +5,10 @@
 
 <div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img></div>
 
-<div><label>Quantity: </label><b editable-text="product.quantity" onbeforesave="updateProduct(product)">{{product.quantity}}</b></div>
+<div ng-show="product.quantity > 0">
+	<label>Quantity: </label>
+	<b editable-text="product.quantity" onbeforesave="updateProduct(product)">{{product.quantity}}</b>
+</div>
+<div ng-show="product.quantity < 1" class="alert alert-danger">
+  <strong>Sold Out!</strong> This gem has been sold out, please check back later!
+</div>

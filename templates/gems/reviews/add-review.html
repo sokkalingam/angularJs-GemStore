@@ -8,11 +8,11 @@
 				<b><ng-pluralize count="key" when="{1: '1 Star', 'other': '{} Stars'}"></ng-pluralize></b>
 				from <ng-pluralize count="value" when="{1: '1 User', 'other': '{} Users'}"></ng-pluralize>
 			</div>
-			<a href=""><div class="progress">
-				<div class="progress-bar" role="progressbar" style="width:{{(value*100)/reviews.length}}%" ng-click="setRating(key)">
+			<div class="progress">
+				<a href=""><div class="progress-bar" role="progressbar" style="width:{{(value*100)/reviews.length}}%" ng-click="setRating(key)">
 					{{ (value * 100 / reviews.length) | number:0 }}%
-				</div>
-			</div></a>
+				</div></a>
+			</div>
 		</div>
 		
 		<ul class="list-group">
