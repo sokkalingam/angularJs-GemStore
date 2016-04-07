@@ -1,8 +1,11 @@
 <h1>Add New Gem</h1>
 <div id="addProductSection">
-	<form class="form-horizontal" role="form" name="addProductForm" ng-submit="addProduct()" novalidate>
 
-	<!-- Need to add Live Preview -->
+	<div ng-include="'../templates/gems/sections/content.html'"></div>
+	<div ng-include="'../templates/gems/sections/panel.html'"></div>
+
+
+	<form class="form-horizontal" role="form" name="addProductForm" novalidate>
 
 		<div class="form-group">
 			<label class="control-label col-sm-2">Name: </label>
@@ -28,6 +31,6 @@
 			<label class="control-label col-sm-2">Quantity: </label>
 			<input class="col-sm-5" ng-model="product.quantity" placeholder="Enter Gem quantity" required></input>
 		</div>
-		<input type="submit" value="Submit"></input>
+		<button type="button" class="btn btn-primary btn-lg" ng-click="addProduct()">Add Gem</button>
 	</form>
 </div>
