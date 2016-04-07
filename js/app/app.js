@@ -7,6 +7,11 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 	$scope.averageReview = {};
 	$scope.rating = 0;
 
+	$scope.getReviews = function(product) {
+		$scope.reviews = product.gemReview.reviews;
+		$scope.averageReview = product.gemReview.averageReview;
+	}
+
 	$scope.loadReviews = function(product) {
 		$http.get(baseUrl + '/gems/' + product.id + '/reviews').success(function(data){
 			console.log('HTTP GET: ' + baseUrl + '/gems/' + product.id + '/reviews');
