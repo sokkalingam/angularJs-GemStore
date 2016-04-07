@@ -5,6 +5,7 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 	$scope.review = {};
 	$scope.reviews = [];
 	$scope.averageReview = {};
+	$scope.rating = 0;
 
 	$scope.loadReviews = function(product) {
 		$http.get(baseUrl + '/gems/' + product.id + '/reviews').success(function(data){
@@ -30,6 +31,15 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 			$scope.loadReviews(product);
 		});
 	};
+
+	$scope.setRating = function(rating) {
+		$scope.rating = parseInt(rating);
+	};
+
+	$scope.isRating = function(rating) {
+		return $scope.rating === rating;
+	}
+
 }]);
 
 app.controller('TabController', ['$scope', function($scope) {
