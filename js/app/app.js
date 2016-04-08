@@ -66,6 +66,14 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 	$scope.products = [];
 	$scope.product = { reviews:[] };
 	$scope.sortByOptions = ['Price', 'Average Review'];
+	$scope.query = {name:'', minPrice:'', maxPrice:'', rating:''}
+
+	$scope.search = function(query) {
+		$http.get(baseUrl + '/gems?name=' + query.name + '&rating='+query.rating +'&minPrice=' + query.minPrice + '&maxPrice=' + query.maxPrice).success(function(data) {
+			console.log('HTTP GET: ' + baseUrl + '/gems?name=' + query.name + '&rating='+query.rating +'&minPrice=' + query.minPrice + '&maxPrice=' + query.maxPrice);
+			$scope.products = data;	
+		});
+	}
 
 	$scope.getSortBy = function(option) {
 		if (option === 'Price')
