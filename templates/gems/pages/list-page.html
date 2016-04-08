@@ -30,7 +30,7 @@
 </div>
 
 <div class="list-group" ng-init="getAll()">
-	<div ng-repeat="product in products | filter:searchText">
+	<div ng-repeat="product in products | filter:searchText | orderBy:getSortBy(option)">
 		<div class="list-group-item">
 			<div ng-include="'../templates/gems/sections/content.html'"></div>
 			<button class="btn btn-danger btn-lg pull-right" ng-click="deleteProduct(product)">Delete</button>
