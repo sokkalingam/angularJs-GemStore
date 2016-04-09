@@ -1,7 +1,8 @@
-<div ng-controller="ReviewController" ng-init="loadReviews(product)">
+<div ng-controller="ReviewController" ng-init="getReviews(product)">
 
 	<div>
-		<h3>Average Customer Review: {{averageReview.averageReview}}</h3>
+		<h3 ng-show="averageReview.averageReview">Average Customer Review: {{averageReview.averageReview}}</h3>
+		<h4 ng-hide="averageReview.averageReview">No reviews yet, be the first one to review!</h4>
 		<button class="btn btn-primary btn-sm" type="button" ng-click="setRating(0)" ng-hide="isRating(0)">See all reviews!</button>
 		<div ng-repeat="(key, value) in averageReview.starsToUsersMap">
 			<div>
@@ -15,6 +16,7 @@
 			</div>
 		</div>
 		
+
 		<ul class="list-group">
 			<div ng-repeat="review in reviews">
 			<li class="list-group-item" ng-show="rating === 0 || isRating(review.stars)">
@@ -26,12 +28,12 @@
 			</div>
 		</ul>
 
-		<button class="btn btn-info btn-sm" type="button" data-toggle="collapse" data-target="[name='form-{{product.name}}']">
+		<button class="btn btn-info btn-sm" type="button" data-toggle="collapse" data-target="[name='form-{{product.id}}']">
 			<span class="glyphicon glyphicon-plus"></span> Add Review 
 		</button>
 
 
-		<div name="form-{{product.name}}" class="collapse">
+		<div name="form-{{product.id}}" class="collapse">
 			<form role="form" class="form-horizontal" name="reviewForm" ng-submit="reviewForm.$valid && addReview(product)" novalidate>
 				<div>
 					<b>{{review.stars}} <span ng-show="review.stars">Stars</span></b>
