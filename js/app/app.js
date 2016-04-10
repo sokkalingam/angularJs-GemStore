@@ -61,25 +61,6 @@ app.controller('TabController', ['$scope', function($scope) {
 
 }]);
 
-app.directive('addProductLivePreviewPanel', function() {
-	return {
-		restrict: 'E',
-		templateUrl: '../html/add-product-live-preview-panel.html',
-		controller: function(){
-			this.tab = 1;
-
-			this.setTab = function(tab) {
-				this.tab = tab;
-			};
-
-			this.isTab = function(tab) {
-				return this.tab === tab;
-			};
-		},
-		controllerAs: 'panelCtrl'
-	};
-});
-
 app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 	
 	$scope.products = [];
