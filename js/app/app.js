@@ -8,8 +8,10 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 	$scope.rating = 0;
 
 	$scope.getReviews = function(product) {
-		$scope.reviews = product.gemReview.reviews;
-		$scope.averageReview = product.gemReview.averageReview;
+		if (product.gemReview != null) {
+			$scope.reviews = product.gemReview.reviews;
+			$scope.averageReview = product.gemReview.averageReview;
+		}
 	}
 
 	$scope.loadReviews = function(product) {
@@ -27,6 +29,7 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 			$scope.reviewForm.$setPristine();
 			$scope.reviewForm.$setUntouched();
 			$scope.loadReviews(product);
+			$scope.$emit('getProducts');
 		});
 	};
 
@@ -34,6 +37,7 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 		$http.delete(baseUrl + '/gems/' + product.id + '/reviews/' + review.id).success(function(data){
 			console.log('HTTP DELETE: ' + baseUrl + '/gems/' + product.id + '/reviews/' + review.id);
 			$scope.loadReviews(product);
+			$scope.$emit('getProducts');
 		});
 	};
 
@@ -61,11 +65,11 @@ app.controller('TabController', ['$scope', function($scope) {
 
 }]);
 
-app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
+app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 	
 	$scope.products = [];
 	$scope.product = { reviews:[] };
-	$scope.sortByOptions = ['Price', 'Average Review'];
+	$scope.sortByOptions = ['Price (low to high)', 'Price (high to low)', 'Average Review (low to high)', 'Average Review (high to low)'];
 	$scope.query = {name:'', minPrice:'', maxPrice:'', rating:''}
 
 	$scope.getByQuery = function(query) {
@@ -76,9 +80,13 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 	}
 
 	$scope.getSortBy = function(option) {
-		if (option === 'Price')
+		if (option === 'Price (low to high)')
 			return 'price';
-		if (option === 'Average Review')
+		if (option === 'Price (high to low)')
+			return '-price';
+		if (option === 'Average Review (low to high)')
+			return 'gemReview.averageReview.averageReview';
+		if (option === 'Average Review (high to low)')
 			return '-gemReview.averageReview.averageReview';
 		return '';
 	};
@@ -116,6 +124,19 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 	$scope.checkout = function(product) {
 		product.quantity = product.quantity - 1;
 		$scope.updateProduct(product);
-	}
+		$scope.displayMessage(product);
+	};
+
+	$scope.displayMessage = function(product) {
+		$scope.showMessage = true;
+		$timeout(function() {
+			$scope.showMessage = false;
+		}, 5000);
+	};
+
+	$scope.$on('getProducts', function() {
+		console.log('$on getProducts');
+		$scope.getByQuery($scope.query);
+	});
 
 }]);
