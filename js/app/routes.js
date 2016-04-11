@@ -10,6 +10,11 @@ angular.module('store')
 			controller: 'GemsController',
 			controllerAs: 'gemsCtrl'
 		})
+		.when('/cart', {
+			templateUrl: '../templates/gems/pages/shopping-cart-page.html',
+			controller: 'ShoppingcartController',
+			controllerAs: 'cartCtrl'
+		})
 		.when('/', {
 			templateUrl: '../templates/home/home-page.html',
 			controller: 'TabController'

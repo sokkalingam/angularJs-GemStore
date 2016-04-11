@@ -65,7 +65,7 @@ app.controller('TabController', ['$scope', function($scope) {
 
 }]);
 
-app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+app.controller('GemsController', ['$scope', '$rootScope', '$http', '$timeout', function($scope, $rootScope, $http, $timeout) {
 	
 	$scope.products = [];
 	$scope.product = { reviews:[] };
@@ -121,6 +121,11 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 		});
 	};
 
+	$scope.addToCart = function(product) {
+		console.log("broadcast addToCart")
+		$rootScope.$broadcast('addToCart');
+	};
+
 	$scope.checkout = function(product) {
 		product.quantity = product.quantity - 1;
 		$scope.updateProduct(product);
@@ -137,6 +142,34 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 	$scope.$on('getProducts', function() {
 		console.log('$on getProducts');
 		$scope.getByQuery($scope.query);
+	});
+
+}]);
+
+app.controller('ShoppingcartController', ['$scope', '$rootScope', '$http', '$timeout', function($scope, $rootScope, $http, $timeout) {
+
+	$scope.productsInCart = [];
+
+	$scope.getProductsInCart = function() {
+		$http.get(baseUrl + '/gems/cart').success(function(data) {
+			$scope.productsInCart = data;
+		});
+	}
+
+	$scope.addToCart = function(product) {
+		$http.get(baseUrl + '/gems/' + product.id + '/addToCart').success(function(data) {
+			$scope.getProductsInCart();
+		});
+	};
+
+	$scope.removeFromCart = function(product) {
+		$http.get(baseUrl + '/gems/' + product.id + '/removeFromCart').success(function(data) {
+			$scope.getProductsInCart();
+		});
+	};
+
+	$scope.$on('addToCart', function() {
+		console.log('$on add to cart');
 	});
 
 }]);
