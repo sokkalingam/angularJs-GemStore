@@ -29,7 +29,6 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 			$scope.reviewForm.$setPristine();
 			$scope.reviewForm.$setUntouched();
 			$scope.loadReviews(product);
-			$scope.$emit('getProducts');
 		});
 	};
 
@@ -37,7 +36,6 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 		$http.delete(baseUrl + '/gems/' + product.id + '/reviews/' + review.id).success(function(data){
 			console.log('HTTP DELETE: ' + baseUrl + '/gems/' + product.id + '/reviews/' + review.id);
 			$scope.loadReviews(product);
-			$scope.$emit('getProducts');
 		});
 	};
 
@@ -131,12 +129,6 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 		$scope.showMessage = true;
 		$timeout(function() {
 			$scope.showMessage = false;
-		}, 5000);
+		}, 3000);
 	};
-
-	$scope.$on('getProducts', function() {
-		console.log('$on getProducts');
-		$scope.getByQuery($scope.query);
-	});
-
 }]);
