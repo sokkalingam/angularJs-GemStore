@@ -65,6 +65,15 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 	
 	$scope.products = [];
 	$scope.product = { reviews:[] };
+	$scope.sortByOptions = ['Price', 'Average Review'];
+
+	$scope.getSortBy = function(option) {
+		if (option === 'Price')
+			return 'price';
+		if (option === 'Average Review')
+			return '-gemReview.averageReview.averageReview';
+		return '';
+	};
 
 	$scope.getAll = function() {
 		$http.get(baseUrl + '/gems').success(function(data) {

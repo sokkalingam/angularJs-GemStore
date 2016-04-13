@@ -1,6 +1,13 @@
 <h1>List Page</h1>
+
+<div class="form-group">
+  <label for="sel1">Sort By:</label>
+  <select class="form-control" ng-model="option" ng-options="item for item in sortByOptions">
+  </select>
+</div>
+
 <div class="list-group" ng-init="getAll()">
-	<div ng-repeat="product in products | orderBy: 'price'">
+	<div ng-repeat="product in products | orderBy: getSortBy(option)">
 		<div class="list-group-item">
 			<div ng-include="'../templates/gems/sections/content.html'"></div>
 			<button class="btn btn-danger btn-lg pull-right" ng-click="deleteProduct(product)">Delete</button>
