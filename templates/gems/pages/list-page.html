@@ -1,13 +1,36 @@
 <h1>List Page</h1>
 
 <div class="form-group">
-  <label for="sel1">Sort By:</label>
-  <select class="form-control" ng-model="option" ng-options="item for item in sortByOptions">
-  </select>
+	<label>Search:</label>
+	<input type="text" class="form-control" ng-model="searchText">
+</div>
+
+<div class="form-group">
+	<label for="sel1">Sort By:</label>
+	<select class="form-control" ng-model="option" ng-options="item for item in sortByOptions">
+	</select>
+</div>
+
+
+<button class="btn btn-info btn-lg" type="button" data-toggle="collapse" data-target="[name='gem-search']">
+	<span class="glyphicon glyphicon-search"></span> Advanced Search
+</button>
+
+<div name="gem-search" class="collapse">
+	<div class="form-group">
+		<label>Name:</label>
+		<input type="text" class="form-control" ng-model="query.name" ng-change="search(query)">
+		<label>Min Price:</label>
+		<input type="text" class="form-control" ng-model="query.minPrice" ng-change="search(query)">
+		<label>Max Price:</label>
+		<input type="text" class="form-control" ng-model="query.maxPrice" ng-change="search(query)">
+		<label>Customer Rating Above:</label>
+		<input type="text" class="form-control" ng-model="query.rating" ng-change="search(query)">
+	</div>
 </div>
 
 <div class="list-group" ng-init="getAll()">
-	<div ng-repeat="product in products | orderBy: getSortBy(option)">
+	<div ng-repeat="product in products | filter:searchText | orderBy:getSortBy(option)">
 		<div class="list-group-item">
 			<div ng-include="'../templates/gems/sections/content.html'"></div>
 			<button class="btn btn-danger btn-lg pull-right" ng-click="deleteProduct(product)">Delete</button>
