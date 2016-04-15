@@ -68,7 +68,7 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 	$scope.sortByOptions = ['Price', 'Average Review'];
 	$scope.query = {name:'', minPrice:'', maxPrice:'', rating:''}
 
-	$scope.search = function(query) {
+	$scope.getByQuery = function(query) {
 		$http.get(baseUrl + '/gems?name=' + query.name + '&rating='+query.rating +'&minPrice=' + query.minPrice + '&maxPrice=' + query.maxPrice).success(function(data) {
 			console.log('HTTP GET: ' + baseUrl + '/gems?name=' + query.name + '&rating='+query.rating +'&minPrice=' + query.minPrice + '&maxPrice=' + query.maxPrice);
 			$scope.products = data;	
@@ -102,14 +102,14 @@ app.controller('GemsController', ['$scope', '$http', function($scope, $http) {
 	$scope.updateProduct = function(product) {
 		$http.put(baseUrl + '/gems/' + product.id, product).success(function(data) {
 			console.log('HTTP PUT: ' + baseUrl + '/gems/' + product.id);
-			$scope.getAll();
+			$scope.getByQuery($scope.query);
 		});
 	}
 
 	$scope.deleteProduct = function(product) {
 		$http.delete(baseUrl + '/gems/' + product.id).success(function(data){
 			console.log('HTTP DELETE: '+ baseUrl + '/gems/' + product.id);
-			$scope.getAll();
+			$scope.getByQuery($scope.query);
 		});
 	};
 
