@@ -1,15 +1,28 @@
 <h1>Shopping Cart</h1>
 
+<button class="btn btn-danger btn-lg pull-right" ng-click="removeFromCart(product)">Checkout All Items in cart</button>
+
 <div class="list-group" ng-init="getProductsInCart()">
 	<div ng-repeat="product in productsInCart">
 		<div class="list-group-item">
 			<h3>
 				<span>{{product.name}}</span> 
-				<em class="pull-right">{{product.price | currency}}</em>
+				<div class="pull-right">{{product.price | currency}}</div>
 			</h3>
-			<div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img>
+
+			<div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img></div>
+
+			<button class="btn btn-danger btn-sm pull-right" ng-click="removeFromCart(product)">Remove From Cart</button>
+
+			<div ng-hide="product.soldOut">
+				<label>Items in stock: </label>
+				<b>{{product.quantity}}</b>
 			</div>
-			<button class="btn btn-danger btn-sm" ng-click="removeFromCart(product)">Remove from Cart</button>
+
+			<div ng-show="product.soldOut" class="alert alert-danger">
+				<strong>Sold Out!</strong> This gem has been sold out, please check back later!
+			</div>
+
 		</div>
 	</div>
 </div>

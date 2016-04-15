@@ -113,6 +113,7 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 
 	$scope.addToCart = function(product) {
 		$http.get(baseUrl + '/gems/' + product.id + '/addToCart').success(function(data) {
+			$scope.getByQuery($scope.query);
 		});
 	};
 
