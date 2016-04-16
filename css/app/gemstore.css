@@ -10,3 +10,10 @@
 .ng-valid.ng-dirty{
 	border-color: green;
 }
+
+.floating-message {
+	position: fixed;
+	top: 5%;
+	left: 25%;
+	width: 50%;	
+}
