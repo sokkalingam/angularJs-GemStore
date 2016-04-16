@@ -1,7 +1,7 @@
 <div class="floating-message">
 	<div ng-show="thisProduct.showMessage" class="alert alert-success">
-		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<p><strong>Purchase Complete!</strong> You have successfully purchased {{thisProduct.name}} for {{thisProduct.price | currency}}</p>
+		<!-- <button type="button" class="close" data-dismiss="alert" ng-click="thisProduct.showMessage = false">&times;</button> -->
+		<p><strong>Purchase Complete!</strong> You have successfully purchased <b>{{thisProduct.name}}</b> for <b>{{thisProduct.price | currency}}</b></p>
 		<p>Thank you for your purchase!</p>
 	</div>
 </div>

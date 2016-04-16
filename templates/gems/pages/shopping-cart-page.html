@@ -11,20 +11,22 @@
 			<div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img></div>
 
 			<button class="btn btn-danger btn-sm pull-right" ng-click="removeFromCart(product)">Remove From Cart</button>
-			<button class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#checkoutModal-{{product.id}}">Checkout</button>
+			<button class="btn btn-info btn-sm pull-right" ng-hide="product.soldOut" data-toggle="modal" data-target="#checkoutModal-{{product.id}}">Checkout</button>
 
 			<div ng-hide="product.soldOut">
 				<label>Items in stock: </label>
 				<b>{{product.quantity}}</b>
 			</div>
 
-			<div ng-show="product.soldOut" class="alert alert-danger">
-				<strong>Sold Out!</strong> This gem has been sold out, please check back later!
-			</div>
-
+			<div ng-include="'../templates/gems/sections/soldout-message.html'"></div>
 			<div ng-include="'../templates/gems/sections/checkout-modal.html'"></div>
-			<div ng-include="'../templates/gems/sections/success-message.html'"></div>
-			
 		</div>
 	</div>
+	<div ng-show="productsInCart.length === 0">
+		<h4>
+			<p>There are no items in your cart.</p>
+			<p>Maybe you should shop more, check out our 'All Gems' section</p>
+		</h4>
+	</div>
+	<div ng-include="'../templates/gems/sections/success-message.html'"></div>
 </div>

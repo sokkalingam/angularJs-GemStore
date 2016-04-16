@@ -64,6 +64,7 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 	
 	$scope.products = [];
 	$scope.thisProduct = {};
+	$scope.product = {};
 	$scope.sortByOptions = ['Price (low to high)', 'Price (high to low)', 'Average Review (low to high)', 'Average Review (high to low)'];
 	$scope.query = {name:'', minPrice:'', maxPrice:'', rating:''}
 
@@ -92,8 +93,8 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 	};
 
 	$scope.addProduct = function() {
-		$http.post(baseUrl + '/gems', $scope.thisProduct).success(function(data) {
-			$scope.thisProduct = {};
+		$http.post(baseUrl + '/gems', $scope.product).success(function(data) {
+			$scope.product = {};
 			$scope.addProductForm.$setPristine();
 			$scope.addProductForm.$setUntouched();
 		});
@@ -137,6 +138,7 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 app.controller('ShoppingcartController', ['$scope', '$rootScope', '$http', '$timeout', function($scope, $rootScope, $http, $timeout) {
 
 	$scope.productsInCart = [];
+	$scope.thisProduct = {};
 
 	$scope.getProductsInCart = function() {
 		$http.get(baseUrl + '/gems/cart').success(function(data) {
@@ -150,18 +152,19 @@ app.controller('ShoppingcartController', ['$scope', '$rootScope', '$http', '$tim
 		});
 	};
 
-	// $scope.displayMessage = function() {
-	// 	$scope.showMessage = true;
-	// 	$timeout(function() {
-	// 		$scope.showMessage = false;
-	// 	}, 3000);
-	// };
+	$scope.checkout = function(product) {
+		$http.post(baseUrl + '/gems/' + product.id + '/checkout').success(function(data) {
+			$scope.removeFromCart(product);
+			$scope.displayMessage(product);
+		});
+	};
 
-	// $scope.checkout = function(product) {
-	// 	$http.post(baseUrl + '/gems/' + product.id + '/checkout').success(function(data) {
-	// 		$scope.removeFromCart(product);
-	// 		$scope.displayMessage();
-	// 	});
-	// };
+	$scope.displayMessage = function(product) {
+		$scope.thisProduct = product;
+		$scope.thisProduct['showMessage'] = true;
+		$timeout(function() {
+			$scope.thisProduct.showMessage = false;
+		}, 10000);
+	};
 
 }]);

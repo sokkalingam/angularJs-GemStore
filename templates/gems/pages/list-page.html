@@ -34,6 +34,7 @@
 		<div class="list-group-item">
 			
 			<div ng-include="'../templates/gems/sections/content.html'"></div>
+			<div ng-include="'../templates/gems/sections/soldout-message.html'"></div>
 			
 			<button class="btn btn-danger btn-lg" ng-hide="product.soldOut" data-toggle="modal" data-target="#checkoutModal-{{product.id}}">One Click Checkout</button>
 			
@@ -44,7 +45,6 @@
 			</span>
 			
 			<div ng-include="'../templates/gems/sections/checkout-modal.html'"></div>
-			<div ng-include="'../templates/gems/sections/success-message.html'"></div>
 			
 			<button class="btn btn-danger btn-lg pull-right" ng-click="deleteProduct(product)">Delete</button>
 			
@@ -52,6 +52,10 @@
 
 		</div>
 	</div>
+	<div ng-show="products.length === 0">
+		<h3>This is a rare sight! <br/> Our store is empty, please check back later.</h3>
+	</div>
+	<div ng-include="'../templates/gems/sections/success-message.html'"></div>
 </div>
 
 
