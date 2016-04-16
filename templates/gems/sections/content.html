@@ -1,6 +1,8 @@
 <h3>
 	<span editable-text="product.name" onbeforesave="updateProduct(product)">{{product.name}}</span> 
-	<em editable-text="product.price" onbeforesave="updateProduct(product)" class="pull-right">{{product.price | currency}}</em>
+	<div class="pull-right">
+		<span editable-text="product.price" onbeforesave="updateProduct(product)">{{product.price | currency}}</span>
+	</div>
 </h3>
 
 <div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img></div>
@@ -14,4 +16,5 @@
   <strong>Sold Out!</strong> This gem has been sold out, please check back later!
 </div>
 
-<button class="btn btn-info btn-lg" ng-hide="product.soldOut" ng-click="checkout(product)">Checkout</button>
+<button class="btn btn-info btn-lg" ng-hide="product.soldOut" data-toggle="modal" data-target="#checkoutModal-{{product.id}}">Checkout</button>
+<div ng-include="'../templates/gems/sections/checkout-modal.html'"></div>
