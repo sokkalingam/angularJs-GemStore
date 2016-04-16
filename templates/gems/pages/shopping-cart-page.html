@@ -10,12 +10,11 @@
 
 			<div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img></div>
 
-			<button class="btn btn-danger btn-sm pull-right" ng-click="removeFromCart(product)">Remove From Cart</button>
-			<button class="btn btn-info btn-sm pull-right" ng-hide="product.soldOut" data-toggle="modal" data-target="#checkoutModal-{{product.id}}">Checkout</button>
+			<button class="btn btn-danger pull-right" ng-click="removeFromCart(product)">Remove From Cart</button>
+			<button class="btn btn-info pull-right" ng-hide="product.soldOut" data-toggle="modal" data-target="#checkoutModal-{{product.id}}">Checkout</button>
 
 			<div ng-hide="product.soldOut">
-				<label>Items in stock: </label>
-				<b>{{product.quantity}}</b>
+				<p>We have <b>{{product.quantity}}</b> <ng-pluralize count="product.quantity" when="{'1':'item', '2':'items'}"></ng-pluralize> in stock</p>
 			</div>
 
 			<div ng-include="'../templates/gems/sections/soldout-message.html'"></div>
