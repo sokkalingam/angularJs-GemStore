@@ -1,0 +1,15 @@
+<h1>Shopping Cart</h1>
+
+<div class="list-group" ng-init="getProductsInCart()">
+	<div ng-repeat="product in productsInCart">
+		<div class="list-group-item">
+			<h3>
+				<span>{{product.name}}</span> 
+				<em class="pull-right">{{product.price | currency}}</em>
+			</h3>
+			<div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img>
+			</div>
+			<button class="btn btn-danger btn-sm" ng-click="removeFromCart(product)">Remove from Cart</button>
+		</div>
+	</div>
+</div>

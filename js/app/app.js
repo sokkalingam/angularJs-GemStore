@@ -16,7 +16,6 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 
 	$scope.loadReviews = function(product) {
 		$http.get(baseUrl + '/gems/' + product.id + '/reviews').success(function(data){
-			console.log('HTTP GET: ' + baseUrl + '/gems/' + product.id + '/reviews');
 			$scope.reviews = data.reviews;
 			$scope.averageReview = data.averageReview;
 		});
@@ -24,7 +23,6 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 
 	$scope.addReview = function(product) {
 		$http.post(baseUrl + '/gems/' + product.id + '/reviews', $scope.review).success(function(data){
-			console.log('HTTP POST: ' + baseUrl + '/gems/' + product.id + '/reviews');
 			$scope.review = {};
 			$scope.reviewForm.$setPristine();
 			$scope.reviewForm.$setUntouched();
@@ -34,7 +32,6 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 
 	$scope.deleteReview = function(product, review) {
 		$http.delete(baseUrl + '/gems/' + product.id + '/reviews/' + review.id).success(function(data){
-			console.log('HTTP DELETE: ' + baseUrl + '/gems/' + product.id + '/reviews/' + review.id);
 			$scope.loadReviews(product);
 		});
 	};
@@ -72,7 +69,6 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 
 	$scope.getByQuery = function(query) {
 		$http.get(baseUrl + '/gems?name=' + query.name + '&rating='+query.rating +'&minPrice=' + query.minPrice + '&maxPrice=' + query.maxPrice).success(function(data) {
-			console.log('HTTP GET: ' + baseUrl + '/gems?name=' + query.name + '&rating='+query.rating +'&minPrice=' + query.minPrice + '&maxPrice=' + query.maxPrice);
 			$scope.products = data;	
 		});
 	}
@@ -91,14 +87,12 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 
 	$scope.getAll = function() {
 		$http.get(baseUrl + '/gems').success(function(data) {
-			console.log('HTTP GET: ' + baseUrl + '/gems');
 			$scope.products = data;	
 		});
 	};
 
 	$scope.addProduct = function() {
 		$http.post(baseUrl + '/gems', $scope.product).success(function(data) {
-			console.log('HTTP POST: ' + baseUrl + '/gems');
 			$scope.product = { reviews: [] };
 			$scope.addProductForm.$setPristine();
 			$scope.addProductForm.$setUntouched();
@@ -107,15 +101,18 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 
 	$scope.updateProduct = function(product) {
 		$http.put(baseUrl + '/gems/' + product.id, product).success(function(data) {
-			console.log('HTTP PUT: ' + baseUrl + '/gems/' + product.id);
 			$scope.getByQuery($scope.query);
 		});
 	}
 
 	$scope.deleteProduct = function(product) {
 		$http.delete(baseUrl + '/gems/' + product.id).success(function(data){
-			console.log('HTTP DELETE: '+ baseUrl + '/gems/' + product.id);
 			$scope.getByQuery($scope.query);
+		});
+	};
+
+	$scope.addToCart = function(product) {
+		$http.get(baseUrl + '/gems/' + product.id + '/addToCart').success(function(data) {
 		});
 	};
 
@@ -131,4 +128,23 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 			$scope.showMessage = false;
 		}, 3000);
 	};
+
+}]);
+
+app.controller('ShoppingcartController', ['$scope', '$rootScope', '$http', '$timeout', function($scope, $rootScope, $http, $timeout) {
+
+	$scope.productsInCart = [];
+
+	$scope.getProductsInCart = function() {
+		$http.get(baseUrl + '/gems/cart').success(function(data) {
+			$scope.productsInCart = data;
+		});
+	}
+
+	$scope.removeFromCart = function(product) {
+		$http.get(baseUrl + '/gems/' + product.id + '/removeFromCart').success(function(data) {
+			$scope.getProductsInCart();
+		});
+	};
+
 }]);
