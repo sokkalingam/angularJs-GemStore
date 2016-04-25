@@ -31,6 +31,6 @@
 			<label class="control-label col-sm-2">Quantity: </label>
 			<input class="col-sm-5" ng-model="product.quantity" placeholder="Enter Gem quantity" required></input>
 		</div>
-		<button type="button" class="btn btn-primary btn-lg" ng-click="addProduct()">Add Gem</button>
+		<button type="button" class="btn btn-primary btn-lg" ng-click="addProduct()" ng-disabled="addProductForm.$invalid">Add Gem</button>
 	</form>
 </div>
