@@ -11,7 +11,3 @@
 	<label>Quantity: </label>
 	<b editable-text="product.quantity" onbeforesave="updateProduct(product)">{{product.quantity}}</b>
 </div>
-
-<div ng-show="product.soldOut" class="alert alert-danger">
-  <strong>Sold Out!</strong> This gem has been sold out, please check back later!
-</div>

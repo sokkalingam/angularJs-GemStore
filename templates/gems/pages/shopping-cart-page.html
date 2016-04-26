@@ -5,11 +5,27 @@
 		<div class="list-group-item">
 			<h3>
 				<span>{{product.name}}</span> 
-				<em class="pull-right">{{product.price | currency}}</em>
+				<div class="pull-right">{{product.price | currency}}</div>
 			</h3>
-			<div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img>
+
+			<div><img class="img-rounded" ng-show="product.image.length > 0" ng-src="{{product.image}}"></img></div>
+
+			<button class="btn btn-danger pull-right" ng-click="removeFromCart(product)">Remove From Cart</button>
+			<button class="btn btn-info pull-right" ng-hide="product.soldOut" data-toggle="modal" data-target="#checkoutModal-{{product.id}}">Checkout</button>
+
+			<div ng-hide="product.soldOut">
+				<p>We have <b>{{product.quantity}}</b> <ng-pluralize count="product.quantity" when="{'1':'item', '2':'items'}"></ng-pluralize> in stock</p>
 			</div>
-			<button class="btn btn-danger btn-sm" ng-click="removeFromCart(product)">Remove from Cart</button>
+
+			<div ng-include="'../templates/gems/sections/soldout-message.html'"></div>
+			<div ng-include="'../templates/gems/sections/checkout-modal.html'"></div>
 		</div>
 	</div>
+	<div ng-show="productsInCart.length === 0">
+		<h4>
+			<p>There are no items in your cart.</p>
+			<p>Maybe you should shop more, check out our 'All Gems' section</p>
+		</h4>
+	</div>
+	<div ng-include="'../templates/gems/sections/success-message.html'"></div>
 </div>
