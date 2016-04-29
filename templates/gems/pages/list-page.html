@@ -1,5 +1,7 @@
 <h1>List Page</h1>
 
+<h5>Loading: {{loading}}</h5>
+
 <div class="form-group">
 	<label>Search:</label>
 	<input type="text" class="form-control" ng-model="searchText">
@@ -11,6 +13,7 @@
 	</select>
 </div>
 
+<div ng-include="'../templates/gems/sections/page-spinner.html'"></div>
 
 <button class="btn btn-info btn-lg" type="button" data-toggle="collapse" data-target="[name='gem-search']">
 	<span class="glyphicon glyphicon-search"></span> Advanced Search
