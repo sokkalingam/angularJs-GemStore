@@ -226,15 +226,12 @@ app.factory('DataFactory', function() {
 	return {
 		loadStart: function() {
 			data.loading++;
-			console.log('loadStart, value:' + data.loading);
 		},
 		loadEnd: function() {
 			if (data.loading > 0)
 				data.loading--;
-			console.log('loadEnd, value:' + data.loading);
 		},
 		getLoading: function() {
-			console.log('getLoading, value:' + data.loading);
 			return data.loading;
 		},
 		setLoading: function(loading) {
