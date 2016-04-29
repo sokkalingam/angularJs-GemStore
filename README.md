@@ -25,8 +25,8 @@ Feature of the application:
 				- Toggle back to view all reviews by clicking 'See All Reviews'
 
 			Add Review
-				- Add review by selecting your rating from a dropdown, entering Comment and user name
-				- Live preivew of the review is displayed as it is being typed
+				- Add review by selecting your rating from a dropdown, entering Comment and user name.
+				- Live preivew of the review is displayed as it is being typed.
 				- On submit, new review is added. Average customer review and review bars are dynamically re-calculated.
 
 			Delete Review
