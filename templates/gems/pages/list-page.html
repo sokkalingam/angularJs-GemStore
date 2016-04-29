@@ -22,11 +22,11 @@
 <div name="gem-search" class="collapse">
 	<div class="form-group">
 		<label>Name:</label>
-		<input type="text" class="form-control" ng-model="query.name" ng-change="getByQuery(query)">
+		<input type="text" class="form-control" ng-model="query.name" ng-change="getByQuery(query)" ng-model-options="{debounce: 1000}">
 		<label>Min Price:</label>
-		<input type="text" class="form-control" ng-model="query.minPrice" ng-change="getByQuery(query)">
+		<input type="text" class="form-control" ng-model="query.minPrice" ng-change="getByQuery(query)" ng-model-options="{debounce: 1000}">
 		<label>Max Price:</label>
-		<input type="text" class="form-control" ng-model="query.maxPrice" ng-change="getByQuery(query)">
+		<input type="text" class="form-control" ng-model="query.maxPrice" ng-change="getByQuery(query)" ng-model-options="{debounce: 1000}">
 		<label>Customer Rating Above:</label>
 		<input type="text" class="form-control" ng-model="query.rating" ng-change="getByQuery(query)">
 	</div>
