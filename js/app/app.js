@@ -8,7 +8,7 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 	$scope.rating = 0;
 
 	$scope.getReviews = function(product) {
-		if (product.gemReview != null) {
+		if (product != null && product.gemReview != null) {
 			$scope.reviews = product.gemReview.reviews;
 			$scope.averageReview = product.gemReview.averageReview;
 		}
@@ -63,7 +63,8 @@ app.controller('TabController', ['$scope', function($scope) {
 app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 	
 	$scope.products = [];
-	$scope.product = { reviews:[] };
+	$scope.thisProduct = {};
+	$scope.product = {};
 	$scope.sortByOptions = ['Price (low to high)', 'Price (high to low)', 'Average Review (low to high)', 'Average Review (high to low)'];
 	$scope.query = {name:'', minPrice:'', maxPrice:'', rating:''}
 
@@ -93,7 +94,7 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 
 	$scope.addProduct = function() {
 		$http.post(baseUrl + '/gems', $scope.product).success(function(data) {
-			$scope.product = { reviews: [] };
+			$scope.product = {};
 			$scope.addProductForm.$setPristine();
 			$scope.addProductForm.$setUntouched();
 		});
@@ -112,21 +113,24 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 	};
 
 	$scope.addToCart = function(product) {
-		$http.get(baseUrl + '/gems/' + product.id + '/addToCart').success(function(data) {
+		$http.post(baseUrl + '/gems/' + product.id + '/addToCart').success(function(data) {
+			$scope.getByQuery($scope.query);
 		});
 	};
 
 	$scope.checkout = function(product) {
-		product.quantity = product.quantity - 1;
-		$scope.updateProduct(product);
-		$scope.displayMessage(product);
+		$http.post(baseUrl + '/gems/' + product.id + '/checkout').success(function(data) {
+			$scope.getByQuery($scope.query);
+			$scope.displayMessage(product);
+		});
 	};
 
 	$scope.displayMessage = function(product) {
-		$scope.showMessage = true;
+		$scope.thisProduct = product;
+		$scope.thisProduct['showMessage'] = true;
 		$timeout(function() {
-			$scope.showMessage = false;
-		}, 3000);
+			$scope.thisProduct.showMessage = false;
+		}, 10000);
 	};
 
 }]);
@@ -134,6 +138,7 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 app.controller('ShoppingcartController', ['$scope', '$rootScope', '$http', '$timeout', function($scope, $rootScope, $http, $timeout) {
 
 	$scope.productsInCart = [];
+	$scope.thisProduct = {};
 
 	$scope.getProductsInCart = function() {
 		$http.get(baseUrl + '/gems/cart').success(function(data) {
@@ -142,9 +147,24 @@ app.controller('ShoppingcartController', ['$scope', '$rootScope', '$http', '$tim
 	}
 
 	$scope.removeFromCart = function(product) {
-		$http.get(baseUrl + '/gems/' + product.id + '/removeFromCart').success(function(data) {
+		$http.post(baseUrl + '/gems/' + product.id + '/removeFromCart').success(function(data) {
 			$scope.getProductsInCart();
 		});
+	};
+
+	$scope.checkout = function(product) {
+		$http.post(baseUrl + '/gems/' + product.id + '/checkout').success(function(data) {
+			$scope.removeFromCart(product);
+			$scope.displayMessage(product);
+		});
+	};
+
+	$scope.displayMessage = function(product) {
+		$scope.thisProduct = product;
+		$scope.thisProduct['showMessage'] = true;
+		$timeout(function() {
+			$scope.thisProduct.showMessage = false;
+		}, 10000);
 	};
 
 }]);

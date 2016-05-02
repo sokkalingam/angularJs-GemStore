@@ -8,29 +8,37 @@
 	<form class="form-horizontal" role="form" name="addProductForm" novalidate>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2">Name: </label>
-			<input class="col-sm-5" ng-model="product.name" placeholder="Enter Gem name" required></input>
+			<label class="control-label col-sm-2">Name*: </label>
+			<input class="col-sm-5" ng-model="product.name" placeholder="Enter Gem name"
+			name="productName" ng-minlength="3" ng-maxlength="20" required></input>
+			<p class="alert-danger col-sm-5" ng-show="addProductForm.productName.$error.minlength">Gem Name too short, should be at least 3 characters</p>
+			<p class="alert-danger col-sm-5" ng-show="addProductForm.productName.$error.maxlength">Gem Name too long, should be less than 20 characters</p>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2">Price: </label>
-			<input class="col-sm-5" ng-model="product.price" placeholder="Enter Gem price" required></input>
+			<label class="control-label col-sm-2">Price*: </label>
+			<input type="number" min="1" max="99999" name="productPrice" class="col-sm-5" ng-model="product.price" placeholder="Enter Gem price" required></input>
+			<p class="alert-danger col-sm-5" ng-show="addProductForm.productPrice.$error.min">Seriously?</p>
+			<p class="alert-danger col-sm-5" ng-show="addProductForm.productPrice.$error.max">Nobody is going to buy that for that kind of money</p>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2">Image URL: </label>
-			<input class="col-sm-5" ng-model="product.image" placeholder="Enter Image URL" required></input>
+			<label class="control-label col-sm-2">Image URL*: </label>
+			<input name="imageurl" class="col-sm-5" ng-model="product.image" placeholder="Enter Image URL" required></input>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2">Description: </label>
-			<input class="col-sm-5" ng-model="product.description" placeholder="Enter Gem description" required></input>
+			<label class="control-label col-sm-2">Description*: </label>
+			<input name="description" class="col-sm-5" ng-model="product.description" placeholder="Enter Gem description" required></input>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2">Specifications: </label>
-			<input class="col-sm-5" ng-model="product.specifications" placeholder="Enter Gem specifications" required></input>
+			<label class="control-label col-sm-2">Specifications*: </label>
+			<input name="specifications" class="col-sm-5" ng-model="product.specifications" placeholder="Enter Gem specifications" required></input>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-2">Quantity: </label>
-			<input class="col-sm-5" ng-model="product.quantity" placeholder="Enter Gem quantity" required></input>
+			<label class="control-label col-sm-2">Quantity*: </label>
+			<input name="quantity" type="number" min="1" max="5" class="col-sm-5" ng-model="product.quantity" placeholder="Enter Gem quantity" required></input>
+
+			<p class="alert-danger col-sm-5" ng-show="addProductForm.quantity.$error.min">You got nothing to sell?</p>
+			<p class="alert-danger col-sm-5" ng-show="addProductForm.quantity.$error.max">We don't keep more than 5, robbers everywhere!</p>
 		</div>
-		<button type="button" class="btn btn-primary btn-lg" ng-click="addProduct()">Add Gem</button>
+		<button type="button" class="btn btn-primary btn-lg" ng-click="addProduct()" ng-disabled="addProductForm.$invalid">Add Gem</button>
 	</form>
 </div>

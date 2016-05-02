@@ -79,4 +79,3 @@ Feature of the application:
 		- Lists all gems that has been added to the cart
 		- User can remove Gem from the cart
 		- User can purchase the Gem from the cart
-		- On purchase, Gem is removed from the cart and the inventory is updated accordingly
