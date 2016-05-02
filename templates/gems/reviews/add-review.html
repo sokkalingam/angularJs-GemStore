@@ -1,8 +1,9 @@
 <div ng-controller="ReviewController" ng-init="getReviews(product)">
 
-	<div>
-		<h3 ng-show="averageReview.averageReview">Average Customer Review: {{averageReview.averageReview}}</h3>
+	<h4 ng-hide="product.id">Users can write reviews once the gem is added</h4>
+	<div ng-show="product.id">
 		<h4 ng-hide="averageReview.averageReview">No reviews yet, be the first one to review!</h4>
+		<h3 ng-show="averageReview.averageReview">Average Customer Review: {{averageReview.averageReview}}</h3>
 		<button class="btn btn-primary btn-sm" type="button" ng-click="setRating(0)" ng-hide="isRating(0)">See all reviews!</button>
 		<div ng-repeat="(key, value) in averageReview.starsToUsersMap">
 			<div>
