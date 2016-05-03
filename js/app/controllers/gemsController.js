@@ -56,7 +56,7 @@ angular.module('store')
 
 			$scope.updateProduct = function(product) {
 				DataFactory.loadStart();
-				GemService.updateProduct($scope.product).success(function(data) {
+				GemService.updateProduct(product).success(function(data) {
 					$scope.getByQuery($scope.query);
 					DataFactory.loadEnd();
 				});
