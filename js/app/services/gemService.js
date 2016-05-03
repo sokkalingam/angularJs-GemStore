@@ -9,7 +9,7 @@ angular.module('store')
 				return $http.get(gemsUrl);
 			},
 			addProduct: function(product) {
-				return $http.post(gemsUrl, $scope.product);	
+				return $http.post(gemsUrl, product);	
 			},
 			updateProduct: function(product) {
 				return $http.put(gemsUrl + '/' + product.id, product);
