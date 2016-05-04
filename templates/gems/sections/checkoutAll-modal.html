@@ -1,0 +1,26 @@
+<div class="modal fade" id="checkoutAllModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">All Gems Checkout</h4>
+			</div>
+			<div class="modal-body">
+				<p>Would you like to buy the following?</p>
+				<div ng-repeat="product in productsInCart" ng-init="totalPrice = 0; itemCount = 0;">
+					<ul ng-init="totalPrice = totalPrice + product.price; itemCount++;">
+						<li><b>{{product.name}}</b> for <b>{{product.price | currency}}</b></li>
+					</ul>
+				</div>
+				<p>Total of <b>{{itemCount}}</b> gems worth <b>{{totalPrice | currency}}</b></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="checkout(product)">Buy</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</div>

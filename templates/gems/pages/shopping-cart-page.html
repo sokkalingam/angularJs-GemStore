@@ -1,6 +1,7 @@
 <h1>Shopping Cart</h1>
 <div ng-include="'../templates/gems/sections/page-spinner.html'"></div>
 <div class="list-group" ng-init="getProductsInCart()">
+	<button class="btn btn-danger btn-lg">Checkout All</button>
 	<div ng-repeat="product in productsInCart">
 		<div class="list-group-item">
 			<h3>

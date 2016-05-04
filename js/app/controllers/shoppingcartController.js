@@ -39,11 +39,33 @@ angular.module('store')
 					});
 				};
 
+				$scope.checkoutAll = function(products) {
+					DataFactory.loadStart();
+					GemService.checkoutList(products).success(function(data) {
+						$scope.removeList(products);
+						$scope.displayGroupMessage(products);
+						DataFactory.loadEnd();
+					});
+				};
+
 				$scope.displayMessage = function(product) {
 					$scope.thisProduct = product;
 					$scope.thisProduct['showMessage'] = true;
 					$timeout(function() {
 						$scope.thisProduct.showMessage = false;
+					}, 5000);
+				};
+
+				$scope.displayGroupMessage = function(products) {
+					$scope.totalItemCount = 0;
+					$scope.totalAmount = 0;
+					for (var i = 0; i < products.length; i++) {
+						$scope.totalItemCount++;
+						$scope.totalAmount += products[i].price;
+					}
+					$scope.showGroupMessage = true;
+					$timeout(function() {
+						$scope.showGroupMessage = false;
 					}, 5000);
 				};
 	}]);
