@@ -18,6 +18,7 @@ angular.module('store')
 					DataFactory.loadStart();
 					ShoppingCartService.getGemsInCart().success(function(data) {
 						$scope.productsInCart = data;
+						$scope.totalCart();
 						DataFactory.loadEnd();
 					});
 				};
@@ -33,20 +34,31 @@ angular.module('store')
 				$scope.checkout = function(product) {
 					DataFactory.loadStart();
 					GemService.checkout(product).success(function(data) {
-						$scope.removeFromCart(product);
-						$scope.displayMessage(product);
+						$scope.getProductsInCart();
 						DataFactory.loadEnd();
+						$scope.displayMessage(product);
 					});
 				};
 
-				$scope.checkoutAll = function(products) {
+				$scope.checkoutAll = function() {
 					DataFactory.loadStart();
-					GemService.checkoutList(products).success(function(data) {
-						$scope.removeList(products);
-						$scope.displayGroupMessage(products);
+					GemService.checkoutAll($scope.productsInCart).success(function(data) {
+						$scope.getProductsInCart();
 						DataFactory.loadEnd();
+						$scope.displayGroupMessage();
 					});
 				};
+
+				$scope.totalCart = function() {
+					$scope.itemCount = 0;
+					$scope.totalAmount = 0;
+					for (var i = 0; i < $scope.productsInCart.length; i++) {
+						if (!$scope.productsInCart[i].soldOut) {
+							$scope.itemCount++;
+							$scope.totalAmount += $scope.productsInCart[i].price;
+						}
+					}
+				}
 
 				$scope.displayMessage = function(product) {
 					$scope.thisProduct = product;
@@ -56,13 +68,7 @@ angular.module('store')
 					}, 5000);
 				};
 
-				$scope.displayGroupMessage = function(products) {
-					$scope.totalItemCount = 0;
-					$scope.totalAmount = 0;
-					for (var i = 0; i < products.length; i++) {
-						$scope.totalItemCount++;
-						$scope.totalAmount += products[i].price;
-					}
+				$scope.displayGroupMessage = function() {
 					$scope.showGroupMessage = true;
 					$timeout(function() {
 						$scope.showGroupMessage = false;

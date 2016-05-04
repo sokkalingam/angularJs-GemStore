@@ -1,7 +1,13 @@
 <h1>Shopping Cart</h1>
 <div ng-include="'../templates/gems/sections/page-spinner.html'"></div>
 <div class="list-group" ng-init="getProductsInCart()">
-	<button class="btn btn-danger btn-lg">Checkout All</button>
+
+	<div ng-show="itemCount">
+		<h4>Items in Cart: {{itemCount}}</h4>
+		<h4>Total Amount: {{totalAmount | currency}}</h4>
+		<button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#checkoutAllModal">Checkout All</button>	
+	</div>
+	
 	<div ng-repeat="product in productsInCart">
 		<div class="list-group-item">
 			<h3>
@@ -20,6 +26,7 @@
 
 			<div ng-include="'../templates/gems/sections/soldout-message.html'"></div>
 			<div ng-include="'../templates/gems/sections/checkout-modal.html'"></div>
+			<div ng-include="'../templates/gems/sections/checkoutAll-modal.html'"></div>
 		</div>
 	</div>
 	<div ng-show="productsInCart.length === 0">
@@ -29,4 +36,5 @@
 		</h4>
 	</div>
 	<div ng-include="'../templates/gems/sections/success-message.html'"></div>
+	<div ng-include="'../templates/gems/sections/group-success-message.html'"></div>
 </div>
