@@ -1,26 +1,23 @@
-
-  <h1>Google Sign In</h1>
-
-  <div ng-init="load()">
-    
-    <div ng-hide="user">
-      <a id="signin" ng-click="signIn()" class="button-link">
-        <img ng-src="../../assets/btn_google_sign_in.png"></img>
-      </a>
-    </div>
-    
-    <div ng-show="user">
-      <div>
-        <h2>Welcome, {{user.name}}!</h2>
-        <img ng-src="{{user.picture}}"></img>
-        <h4>You have signed in with email, {{user.email}}</h4>
-      </div>
-      <button ng-click="signOut()" class="btn btn-lg btn-primary button-link">
-        Google Sign Out
-      </button>
-    </div>
-  
+<div class="center-block text-center" ng-init="load()">
+   <h1>Google Sign In</h1>    
+  <div ng-hide="user">
+    <a id="signin" ng-click="signIn()" class="button-link">
+      <img ng-src="../../assets/btn_google_sign_in.png"></img>
+    </a>
   </div>
+  
+  <div ng-show="user">
+    <div>
+      <h2>Welcome, {{user.name}}!</h2>
+      <img ng-src="{{user.picture}}"></img>
+      <h4>You have signed in with email, {{user.email}}</h4>
+    </div>
+    <button ng-click="signOut()" class="btn btn-lg btn-primary button-link">
+      Google Sign Out
+    </button>
+  </div>
+
+</div>
 
  <!-- ID:      237383054276-0jmo0pn3l3oqqs0olo3bm65hnf4a3gia.apps.googleusercontent.com
       Secret:  J5eeg4SftS-tz9xBlX1MVk0N
