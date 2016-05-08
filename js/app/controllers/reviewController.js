@@ -7,14 +7,6 @@ angular.module('store')
 				$scope.averageReview = {};
 				$scope.rating = 0;
 
-				$scope.loading = DataFactory.getLoading();
-				
-				$scope.$watch(
-					function() { return DataFactory.getLoading(); },
-					function(newValue, oldValue) {
-						$scope.loading = newValue;
-				});
-
 				$scope.getReviews = function(product) {
 					if (product != null && product.gemReview != null) {
 						$scope.reviews = product.gemReview.reviews;

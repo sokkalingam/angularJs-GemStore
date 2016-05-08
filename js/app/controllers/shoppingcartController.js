@@ -6,14 +6,6 @@ angular.module('store')
 				$scope.productsInCart = [];
 				$scope.thisProduct = {};
 
-				$scope.loading = DataFactory.getLoading();
-				
-				$scope.$watch(
-					function() { return DataFactory.getLoading(); },
-					function(newValue, oldValue) {
-						$scope.loading = newValue;
-				});
-
 				$scope.getProductsInCart = function() {
 					DataFactory.loadStart();
 					ShoppingCartService.getGemsInCart().success(function(data) {

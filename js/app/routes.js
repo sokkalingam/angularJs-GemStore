@@ -14,6 +14,10 @@ angular.module('store')
 			templateUrl: '../templates/gems/pages/shopping-cart-page.html',
 			controller: 'ShoppingcartController'
 		})
+		.when('/login', {
+			templateUrl: '../templates/home/login.html',
+			controller: 'LoginController'
+		})
 		.when('/', {
 			templateUrl: '../templates/home/home-page.html',
 			controller: 'TabController'

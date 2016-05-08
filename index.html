@@ -3,6 +3,8 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="237383054276-0jmo0pn3l3oqqs0olo3bm65hnf4a3gia.apps.googleusercontent.com">
 	<title>Gem Store</title>
 	<link rel="stylesheet" type="text/css" href="./css/lib/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="./css/lib/xeditable.css" />
@@ -10,9 +12,10 @@
 </head>
 
 <body>
-	<div class="container">
+	<div class="container" ng-controller="MainController as mainCtrl">
 
 		<div ng-include="'./templates/common/navigation.html'"></div>
+		<div ng-include="'./templates/gems/sections/page-spinner.html'"></div>
 
 		<div ng-view></div>
 		
@@ -21,10 +24,13 @@
 		<script type="text/javascript" src="./js/lib/xeditable.js"></script>
 		<script type="text/javascript" src="./js/lib/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript" src="./css/lib/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
 		
 		<script type="text/javascript" src="./js/app/app.js"></script>
 		<script type="text/javascript" src="./js/app/routes.js"></script>
 
+		<script type="text/javascript" src="./js/app/controllers/mainController.js"></script>
+		<script type="text/javascript" src="./js/app/controllers/loginController.js"></script>
 		<script type="text/javascript" src="./js/app/controllers/gemsController.js"></script>
 		<script type="text/javascript" src="./js/app/controllers/reviewController.js"></script>
 		<script type="text/javascript" src="./js/app/controllers/shoppingcartController.js"></script>
@@ -32,6 +38,7 @@
 
 		<script type="text/javascript" src="./js/app/factories/dataFactory.js"></script>
 
+		<script type="text/javascript" src="./js/app/services/authService.js"></script>
 		<script type="text/javascript" src="./js/app/services/shoppingCartService.js"></script>
 		<script type="text/javascript" src="./js/app/services/gemService.js"></script>
 		<script type="text/javascript" src="./js/app/services/reviewService.js"></script>

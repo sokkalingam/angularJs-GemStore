@@ -5,7 +5,8 @@
 angular.module('store')
 	.factory('DataFactory', function() {
 		var data = {
-			loading:0
+			loading:0,
+			user: null
 		};
 
 		return {
@@ -21,6 +22,13 @@ angular.module('store')
 			},
 			setLoading: function(loading) {
 				data.loading = loading;
+			},
+
+			setUser: function(user) {
+				data.user = user;
+			},
+			getUser: function() {
+				return data.user;
 			}
 		};
 	});
