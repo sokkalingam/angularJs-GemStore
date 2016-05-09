@@ -7,7 +7,7 @@ angular.module('store')
 		})
 		.when('/addNewGem', {
 			templateUrl: '../templates/gems/pages/add-page.html',
-			controller: 'GemsController',
+			controller: 'AddGemController',
 			controllerAs: 'gemsCtrl'
 		})
 		.when('/cart', {

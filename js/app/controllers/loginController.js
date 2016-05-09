@@ -1,5 +1,9 @@
 angular.module('store')
 	.controller('LoginController', ['$scope','AuthService', 'DataFactory', function($scope, AuthService, DataFactory) {
+
+		DataFactory.setTab(1);
+
+
 		$scope.auth2 = {};
 		$scope.token = {};
 

@@ -2,7 +2,9 @@ angular.module('store')
 	.controller('GemsController',
 		['$scope', '$http', '$timeout', 'DataFactory', 'GemService',
 			function($scope, $http, $timeout, DataFactory, GemService) {
-		
+			
+			DataFactory.setTab(3);
+			
 			$scope.products = [];
 			$scope.thisProduct = {};
 			$scope.product = {};
@@ -37,16 +39,6 @@ angular.module('store')
 				});
 			};
 
-			$scope.addProduct = function() {
-				DataFactory.loadStart();
-				GemService.addProduct($scope.product).success(function(data) {
-					$scope.product = {};
-					$scope.addProductForm.$setPristine();
-					$scope.addProductForm.$setUntouched();
-					DataFactory.loadEnd();
-				});
-			};
-
 			$scope.updateProduct = function(product) {
 				DataFactory.loadStart();
 				GemService.updateProduct(product).success(function(data) {
@@ -56,28 +48,34 @@ angular.module('store')
 			};
 
 			$scope.deleteProduct = function(product) {
-				DataFactory.loadStart();
-				GemService.deleteProduct(product).success(function(data){
-					$scope.getByQuery($scope.query);
-					DataFactory.loadEnd();
-				});
+				if ($scope.hasAccess()) {
+					DataFactory.loadStart();
+					GemService.deleteProduct(product).success(function(data){
+						$scope.getByQuery($scope.query);
+						DataFactory.loadEnd();
+					});
+				}
 			};
 
 			$scope.addToCart = function(product) {
-				DataFactory.loadStart();
-				GemService.addToCart(product).success(function(data) {
-					$scope.getByQuery($scope.query);
-					DataFactory.loadEnd();
-				});
+				if ($scope.hasAccess()) {
+					DataFactory.loadStart();
+					GemService.addToCart(product).success(function(data) {
+						$scope.getByQuery($scope.query);
+						DataFactory.loadEnd();
+					});
+				}
 			};
 
 			$scope.checkout = function(product) {
-				DataFactory.loadStart();
-				GemService.checkout(product).success(function(data) {
-					$scope.getByQuery($scope.query);
-					DataFactory.loadEnd();
-					$scope.displayMessage(product);
-				});
+				if ($scope.hasAccess()) {
+					DataFactory.loadStart();
+					GemService.checkout(product).success(function(data) {
+						$scope.getByQuery($scope.query);
+						DataFactory.loadEnd();
+						$scope.displayMessage(product);
+					});
+				}
 			};
 
 			$scope.displayMessage = function(product) {
