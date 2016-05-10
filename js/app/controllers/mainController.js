@@ -47,6 +47,6 @@ angular.module('store')
 				$scope.toLogin();
 				return false;
 			}
-		}
+		};
 
 	}]);

@@ -3,10 +3,10 @@
 	using the 'data' object	
 */
 angular.module('store')
-	.factory('DataFactory', function() {
+	.factory('DataFactory', ['$localStorage', function($localStorage) {
+		
 		var data = {
 			loading:0,
-			user: null,
 			tab: 2
 		};
 
@@ -26,10 +26,10 @@ angular.module('store')
 			},
 
 			setUser: function(user) {
-				data.user = user;
+				$localStorage.user = user;
 			},
 			getUser: function() {
-				return data.user;
+				return $localStorage.user;
 			},
 
 			setTab: function(tab) {
@@ -39,4 +39,4 @@ angular.module('store')
 				return data.tab;
 			}
 		};
-	});
+	}]);
