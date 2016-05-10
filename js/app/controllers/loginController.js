@@ -2,18 +2,19 @@ angular.module('store')
 	.controller('LoginController', ['$scope','AuthService', 'DataFactory', function($scope, AuthService, DataFactory) {
 
 		DataFactory.setTab(1);
+		$scope.auth2 = DataFactory.getAuth();
 
-
-		$scope.auth2 = {};
-		$scope.token = {};
-
-		$scope.load = function() {
+		($scope.load = function() {
 			gapi.load('auth2', function() {
 				gapi.auth2.init();
-				$scope.auth2 = gapi.auth2.getAuthInstance();
+				$scope.auth2 = DataFactory.getAuth();
+				if ($scope.auth2 === null) {
+					$scope.auth2 = gapi.auth2.getAuthInstance();
+					DataFactory.setAuth($scope.auth2);
+				}
 				console.log("Google Auth Loaded");
 			});
-		};
+		})();
 
 		$scope.authorize = function(token) {
 			AuthService.authorize(token).success(function(user){
