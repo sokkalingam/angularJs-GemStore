@@ -7,7 +7,8 @@ angular.module('store')
 		
 		var data = {
 			loading:0,
-			tab: 2
+			tab: 2,
+			auth: null
 		};
 
 		return {
@@ -37,6 +38,15 @@ angular.module('store')
 			},
 			getTab: function() {
 				return data.tab;
-			}
+			},
+
+			setAuth: function(auth) {
+				data.auth = auth;
+			},
+			getAuth: function() {
+				return data.auth;
+			},
+
+
 		};
 	}]);
