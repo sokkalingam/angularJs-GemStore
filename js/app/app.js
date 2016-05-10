@@ -1,5 +1,5 @@
 var app = angular.module('store', ['ngRoute', 'xeditable']);
-var baseUrl = 'http://localhost:8080/gemstore/webapi';
+var baseUrl = 'https://sokkalingam-gemstore.herokuapp.com/webapi';
 
 app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 	$scope.review = {};
