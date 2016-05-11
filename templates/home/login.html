@@ -8,9 +8,9 @@
   
   <div ng-show="user">
     <div>
-      <h2>Welcome, {{user.name}}!</h2>
-      <img ng-src="{{user.picture}}"></img>
-      <h4>You have signed in with email, {{user.email}}</h4>
+      <h2>Welcome, {{user.googleToken.name}}!</h2>
+      <img ng-src="{{user.googleToken.picture}}"></img>
+      <h4>You have signed in with email, {{user.googleToken.email}}</h4>
     </div>
     <button ng-click="signOut()" class="btn btn-lg btn-primary button-link">
       Google Sign Out
