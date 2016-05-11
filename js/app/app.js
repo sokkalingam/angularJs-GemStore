@@ -1,11 +1,19 @@
 var app = angular.module('store', ['ngRoute', 'xeditable']);
 var baseUrl = 'https://sokkalingam-gemstore.herokuapp.com/webapi';
 
-app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
+app.controller('ReviewController', ['$scope', '$http', 'DataFactory', function($scope, $http, DataFactory) {
 	$scope.review = {};
 	$scope.reviews = [];
 	$scope.averageReview = {};
 	$scope.rating = 0;
+
+	$scope.loading = DataFactory.getLoading();
+	
+	$scope.$watch(
+		function() { return DataFactory.getLoading(); },
+		function(newValue, oldValue) {
+			$scope.loading = newValue;
+	});
 
 	$scope.getReviews = function(product) {
 		if (product != null && product.gemReview != null) {
@@ -15,24 +23,30 @@ app.controller('ReviewController', ['$scope', '$http', function($scope, $http) {
 	}
 
 	$scope.loadReviews = function(product) {
+		DataFactory.loadStart();
 		$http.get(baseUrl + '/gems/' + product.id + '/reviews').success(function(data){
 			$scope.reviews = data.reviews;
 			$scope.averageReview = data.averageReview;
+			DataFactory.loadEnd();
 		});
 	};
 
 	$scope.addReview = function(product) {
+		DataFactory.loadStart();
 		$http.post(baseUrl + '/gems/' + product.id + '/reviews', $scope.review).success(function(data){
 			$scope.review = {};
 			$scope.reviewForm.$setPristine();
 			$scope.reviewForm.$setUntouched();
 			$scope.loadReviews(product);
+			DataFactory.loadEnd();
 		});
 	};
 
 	$scope.deleteReview = function(product, review) {
+		DataFactory.loadStart();
 		$http.delete(baseUrl + '/gems/' + product.id + '/reviews/' + review.id).success(function(data){
 			$scope.loadReviews(product);
+			DataFactory.loadEnd();
 		});
 	};
 
@@ -60,17 +74,26 @@ app.controller('TabController', ['$scope', function($scope) {
 
 }]);
 
-app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+app.controller('GemsController', ['$scope', '$http', '$timeout', 'DataFactory', function($scope, $http, $timeout, DataFactory) {
 	
 	$scope.products = [];
 	$scope.thisProduct = {};
 	$scope.product = {};
 	$scope.sortByOptions = ['Price (low to high)', 'Price (high to low)', 'Average Review (low to high)', 'Average Review (high to low)'];
 	$scope.query = {name:'', minPrice:'', maxPrice:'', rating:''}
+	$scope.loading = DataFactory.getLoading();
+	
+	$scope.$watch(
+		function() { return DataFactory.getLoading(); },
+		function(newValue, oldValue) {
+			$scope.loading = newValue;
+	});
 
 	$scope.getByQuery = function(query) {
+		DataFactory.loadStart();
 		$http.get(baseUrl + '/gems?name=' + query.name + '&rating='+query.rating +'&minPrice=' + query.minPrice + '&maxPrice=' + query.maxPrice).success(function(data) {
-			$scope.products = data;	
+			$scope.products = data;
+			DataFactory.loadEnd();
 		});
 	}
 
@@ -87,41 +110,53 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 	};
 
 	$scope.getAll = function() {
+		DataFactory.loadStart();
 		$http.get(baseUrl + '/gems').success(function(data) {
-			$scope.products = data;	
+			$scope.products = data;
+			DataFactory.loadEnd();
 		});
 	};
 
 	$scope.addProduct = function() {
+		DataFactory.loadStart();
 		$http.post(baseUrl + '/gems', $scope.product).success(function(data) {
 			$scope.product = {};
 			$scope.addProductForm.$setPristine();
 			$scope.addProductForm.$setUntouched();
+			DataFactory.loadEnd();
 		});
 	};
 
 	$scope.updateProduct = function(product) {
+		DataFactory.loadStart();
 		$http.put(baseUrl + '/gems/' + product.id, product).success(function(data) {
 			$scope.getByQuery($scope.query);
+			DataFactory.loadEnd();
 		});
 	}
 
 	$scope.deleteProduct = function(product) {
+		DataFactory.loadStart();
 		$http.delete(baseUrl + '/gems/' + product.id).success(function(data){
 			$scope.getByQuery($scope.query);
+			DataFactory.loadEnd();
 		});
 	};
 
 	$scope.addToCart = function(product) {
+		DataFactory.loadStart();
 		$http.post(baseUrl + '/gems/' + product.id + '/addToCart').success(function(data) {
 			$scope.getByQuery($scope.query);
+			DataFactory.loadEnd();
 		});
 	};
 
 	$scope.checkout = function(product) {
+		DataFactory.loadStart();
 		$http.post(baseUrl + '/gems/' + product.id + '/checkout').success(function(data) {
 			$scope.getByQuery($scope.query);
 			$scope.displayMessage(product);
+			DataFactory.loadEnd();
 		});
 	};
 
@@ -135,27 +170,41 @@ app.controller('GemsController', ['$scope', '$http', '$timeout', function($scope
 
 }]);
 
-app.controller('ShoppingcartController', ['$scope', '$rootScope', '$http', '$timeout', function($scope, $rootScope, $http, $timeout) {
+app.controller('ShoppingcartController', ['$scope', '$rootScope', '$http', '$timeout', 'DataFactory', function($scope, $rootScope, $http, $timeout, DataFactory) {
 
 	$scope.productsInCart = [];
 	$scope.thisProduct = {};
 
+	$scope.loading = DataFactory.getLoading();
+	
+	$scope.$watch(
+		function() { return DataFactory.getLoading(); },
+		function(newValue, oldValue) {
+			$scope.loading = newValue;
+	});
+
 	$scope.getProductsInCart = function() {
+		DataFactory.loadStart();
 		$http.get(baseUrl + '/gems/cart').success(function(data) {
 			$scope.productsInCart = data;
+			DataFactory.loadEnd();
 		});
 	}
 
 	$scope.removeFromCart = function(product) {
+		DataFactory.loadStart();
 		$http.post(baseUrl + '/gems/' + product.id + '/removeFromCart').success(function(data) {
 			$scope.getProductsInCart();
+			DataFactory.loadEnd();
 		});
 	};
 
 	$scope.checkout = function(product) {
+		DataFactory.loadStart();
 		$http.post(baseUrl + '/gems/' + product.id + '/checkout').success(function(data) {
 			$scope.removeFromCart(product);
 			$scope.displayMessage(product);
+			DataFactory.loadEnd();
 		});
 	};
 
@@ -168,3 +217,25 @@ app.controller('ShoppingcartController', ['$scope', '$rootScope', '$http', '$tim
 	};
 
 }]);
+
+app.factory('DataFactory', function() {
+	var data = {
+		loading:0
+	};
+
+	return {
+		loadStart: function() {
+			data.loading++;
+		},
+		loadEnd: function() {
+			if (data.loading > 0)
+				data.loading--;
+		},
+		getLoading: function() {
+			return data.loading;
+		},
+		setLoading: function(loading) {
+			data.loading = loading;
+		}
+	};
+});
