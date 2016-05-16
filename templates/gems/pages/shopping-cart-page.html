@@ -14,7 +14,7 @@
 			<button class="btn btn-info pull-right" ng-hide="product.soldOut" data-toggle="modal" data-target="#checkoutModal-{{product.id}}">Checkout</button>
 
 			<div ng-hide="product.soldOut">
-				<p>We have <b>{{product.quantity}}</b> <ng-pluralize count="product.quantity" when="{'1':'item', '2':'items'}"></ng-pluralize> in stock</p>
+				<p>We have <b>{{product.quantity}}</b> <ng-pluralize count="product.quantity" when="{'0':'items', '1':'item', 'other':'items'}"></ng-pluralize> in stock</p>
 			</div>
 
 			<div ng-include="'../templates/gems/sections/soldout-message.html'"></div>
