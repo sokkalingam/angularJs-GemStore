@@ -40,3 +40,11 @@
     top: 30%;
     display: block;     
 }
+
+.margin20px {
+    margin: 20px;
+}
+
+.margintop20px {
+    margin-top: 20px;
+}

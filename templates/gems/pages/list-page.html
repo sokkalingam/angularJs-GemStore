@@ -1,11 +1,9 @@
 <h1>List Page</h1>
 
-<div class="form-group">
+<div class="form-inline">
 	<label>Search:</label>
 	<input type="text" class="form-control" ng-model="searchText">
-</div>
 
-<div class="form-group">
 	<label for="sel1">Sort By:</label>
 	<select class="form-control" ng-model="option" ng-options="item for item in sortByOptions">
 	</select>
@@ -13,24 +11,24 @@
 
 <div ng-include="'../templates/gems/sections/page-spinner.html'"></div>
 
-<button class="btn btn-info btn-lg" type="button" data-toggle="collapse" data-target="[name='gem-search']">
+<button class="btn btn-info btn-sm margintop20px" type="button" data-toggle="collapse" data-target="[name='gem-search']">
 	<span class="glyphicon glyphicon-search"></span> Advanced Search
 </button>
 
-<div name="gem-search" class="collapse">
+<div name="gem-search" class="collapse form-inline margintop20px">
 	<div class="form-group">
 		<label>Name:</label>
-		<input type="text" class="form-control" ng-model="query.name" ng-change="getByQuery(query)" ng-model-options="{debounce: 1000}">
+		<input type="text" class="form-control" ng-model="query.name" ng-change="getByQuery(query)" ng-model-options="{debounce: 500}">
 		<label>Min Price:</label>
-		<input type="text" class="form-control" ng-model="query.minPrice" ng-change="getByQuery(query)" ng-model-options="{debounce: 1000}">
+		<input type="number" min="0" class="form-control" ng-model="query.minPrice" ng-change="getByQuery(query)" ng-model-options="{debounce: 500}">
 		<label>Max Price:</label>
-		<input type="text" class="form-control" ng-model="query.maxPrice" ng-change="getByQuery(query)" ng-model-options="{debounce: 1000}">
-		<label>Customer Rating Above:</label>
-		<input type="text" class="form-control" ng-model="query.rating" ng-change="getByQuery(query)">
+		<input type="number" min="0" class="form-control" ng-model="query.maxPrice" ng-change="getByQuery(query)" ng-model-options="{debounce: 500}">
+		<label>Average Review:</label>
+		<input type="number" min="0" class="form-control" ng-model="query.rating" ng-change="getByQuery(query)" ng-model-options="{debounce: 500}">
 	</div>
 </div>
 
-<div class="list-group" ng-init="getAll()">
+<div class="list-group margintop20px" ng-init="getAll()">
 	<div ng-repeat="product in products | filter:searchText | orderBy:getSortBy(option)">
 		<div class="list-group-item">
 			
