@@ -22,6 +22,12 @@ angular.module('store')
 			},
 			checkout: function(product) {
 				return $http.post(gemsUrl + '/' + product.id + '/checkout');
+			},
+			checkoutAll: function(products) {
+				var queryParams = '';
+				for (var product of products)
+					queryParams += 'id=' + product.id + '&';
+				return $http.post(gemsUrl + '/checkoutList?' + queryParams);
 			}
 		};
 	}]);
