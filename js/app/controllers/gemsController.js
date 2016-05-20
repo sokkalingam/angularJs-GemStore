@@ -8,13 +8,6 @@ angular.module('store')
 			$scope.product = {};
 			$scope.sortByOptions = ['Price (low to high)', 'Price (high to low)', 'Average Review (low to high)', 'Average Review (high to low)'];
 			$scope.query = {name:'', minPrice:'', maxPrice:'', rating:''}
-			$scope.loading = DataFactory.getLoading();
-			
-			$scope.$watch(
-				function() { return DataFactory.getLoading(); },
-				function(newValue, oldValue) {
-					$scope.loading = newValue;
-			});
 
 			$scope.getByQuery = function(query) {
 				DataFactory.loadStart();
@@ -82,8 +75,8 @@ angular.module('store')
 				DataFactory.loadStart();
 				GemService.checkout(product).success(function(data) {
 					$scope.getByQuery($scope.query);
-					$scope.displayMessage(product);
 					DataFactory.loadEnd();
+					$scope.displayMessage(product);
 				});
 			};
 

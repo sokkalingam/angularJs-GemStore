@@ -1,7 +1,7 @@
 angular.module('store')
 	.controller('TabController', ['$scope', function($scope) {
 
-		$scope.tab = 1;
+		$scope.tab = 2;
 
 		$scope.setTab = function(tab) {
 			$scope.tab = tab;
