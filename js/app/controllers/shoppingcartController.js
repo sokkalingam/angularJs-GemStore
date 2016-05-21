@@ -3,6 +3,8 @@ angular.module('store')
 		['$scope', '$http', '$timeout', 'DataFactory', 'ShoppingCartService', 'GemService',
 			function($scope, $http, $timeout, DataFactory, ShoppingCartService, GemService) {
 
+				DataFactory.setTab(5);
+
 				$scope.productsInCart = [];
 				$scope.thisProduct = {};
 
