@@ -3,11 +3,12 @@
 	using the 'data' object	
 */
 angular.module('store')
-	.factory('DataFactory', function() {
+	.factory('DataFactory', ['$localStorage', function($localStorage) {
+		
 		var data = {
 			loading:0,
-			user: null,
-			tab: 2
+			tab: 2,
+			auth: null
 		};
 
 		return {
@@ -26,10 +27,10 @@ angular.module('store')
 			},
 
 			setUser: function(user) {
-				data.user = user;
+				$localStorage.user = user;
 			},
 			getUser: function() {
-				return data.user;
+				return $localStorage.user;
 			},
 
 			setTab: function(tab) {
@@ -37,6 +38,15 @@ angular.module('store')
 			},
 			getTab: function() {
 				return data.tab;
-			}
+			},
+
+			setAuth: function(auth) {
+				data.auth = auth;
+			},
+			getAuth: function() {
+				return data.auth;
+			},
+
+
 		};
-	});
+	}]);

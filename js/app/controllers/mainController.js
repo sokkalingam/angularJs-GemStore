@@ -4,33 +4,23 @@ angular.module('store')
 		$scope.loading = DataFactory.getLoading();
 		
 		$scope.$watch(
-			function() {
-				return $location.path();
-			},
+			function() { return $location.path(); },
 			function(newValue, oldValue){
-				if (!$scope.isUserSignedIn()) {
-					if (newValue === '/addNewGem' || newValue === '/cart') {
-						$location.path('/login');
-					}
+				if (newValue === '/addNewGem' || newValue === '/cart') {
+						$scope.hasAccess();
 				}
 			}
 		);
 
 		$scope.$watch(
 			function() { return DataFactory.getLoading(); },
-			function(newValue, oldValue) {
-				$scope.loading = newValue;
-		});
+			function(newValue, oldValue) { $scope.loading = newValue; }
+		);
 
 		$scope.$watch(
-			function() { 
-				// console.log('user watching1'); 
-				return DataFactory.getUser(); },
-			function(newValue, oldValue) {
-				// console.log('newValue: ' + newValue + ', oldValue: ' + oldValue);
-				// console.log('user watching2');
-				$scope.user = newValue;
-		});
+			function() { return DataFactory.getUser(); },
+			function(newValue, oldValue) { $scope.user = newValue; }
+		);
 
 		$scope.isUserSignedIn = function() {
 			return $scope.user !== null;
@@ -40,6 +30,11 @@ angular.module('store')
 			$location.path('/login');
 		};
 
+		$scope.getUserName = function() {
+			if ($scope.isUserSignedIn())
+				return $scope.user.name;
+		};
+
 		$scope.hasAccess = function () {
 			if ($scope.isUserSignedIn())
 				return true;
@@ -47,6 +42,6 @@ angular.module('store')
 				$scope.toLogin();
 				return false;
 			}
-		}
+		};
 
 	}]);
