@@ -2,7 +2,7 @@ angular.module('store')
 	.controller('ReviewController',
 		['$scope', '$http', 'DataFactory', 'ReviewService',
 			function($scope, $http, DataFactory, ReviewService) {
-				$scope.review = {};
+				$scope.review = { author: $scope.getUserName() };
 				$scope.reviews = [];
 				$scope.averageReview = {};
 				$scope.rating = 0;
